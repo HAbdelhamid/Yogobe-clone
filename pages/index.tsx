@@ -1,10 +1,7 @@
 import Head from "next/head";
-import { Inter } from "@next/font/google";
 import Link from "next/link";
 import Cards from "../components/cards";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -15,26 +12,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
+      <Container>
         <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-      </Box>
+      </Container>
     </div>
   );
 }
 
-const Box = styled.div`
-  display: grid;
-  margin: 0px auto;
-  max-width: 86%;
-  grid-template-columns: repeat(3, minmax(300px, 1fr));
-  gap: 15px;
-  margin: 6em auto;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;

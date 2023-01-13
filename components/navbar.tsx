@@ -2,6 +2,9 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import Link from "next/link";
+import { PlayCircleOutline } from "@styled-icons/evaicons-outline/PlayCircleOutline";
+import { CameraVideo } from "@styled-icons/bootstrap/CameraVideo";
+// const playIcon = styled(PlayCircleOutline)``;
 
 function Navbar() {
   return (
@@ -12,15 +15,19 @@ function Navbar() {
             <Image src={"/logo.png"} width={100} height={100} alt="" />
           </Link>
         </Logo>
-        <nav>
+        <StyledNav>
           <List>
-            <Listitem>Play</Listitem>
-            <Listitem>LIVE</Listitem>
+            <Listitem>
+              <PlayCircleOutline size="15" /> Play
+            </Listitem>
+            <Listitem>
+              <CameraVideo size="15" /> LIVE
+            </Listitem>
             <Listitem>Courses</Listitem>
             <Listitem>Store</Listitem>
             <Listitem>More</Listitem>
           </List>
-        </nav>
+        </StyledNav>
         <Box>
           <Normalbtn>Log in</Normalbtn>
           <Bluebtn>Try for free</Bluebtn>
@@ -40,11 +47,24 @@ const Container = styled.div`
   max-height: 75px;
 `;
 
+const Logo = styled.div`
+  display: flex;
+  flex-basis: 0%;
+`;
+
+const StyledNav = styled.nav`
+  display: flex;
+  justify-content: end;
+  flex-basis: 40%;
+  font-size: 14px;
+  font-weight: bold;
+`;
+
 const Box = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
-  flex-basis: 100%;
+  flex-basis: 60%;
 `;
 
 const Bluebtn = styled.a`
@@ -72,17 +92,16 @@ const Normalbtn = styled.button`
   border: none;
 `;
 
-const Logo = styled.div`
-  display: flex;
-  flex-basis: 20%;
-`;
-
 const List = styled.ul`
   display: flex;
 `;
 
 const Listitem = styled.li`
+  display: flex;
   list-style: none;
-  padding: 0px 10px;
+  padding: 0px 15px;
   margin: 0px;
+  svg {
+    margin-right: 5px;
+  }
 `;

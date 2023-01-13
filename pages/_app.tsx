@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import { AppProps } from "next/app";
 import client from "../gql/apolloclient";
 import { ApolloProvider } from "@apollo/client";
 import Navbar from "../components/navbar";
