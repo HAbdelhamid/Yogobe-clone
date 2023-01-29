@@ -96,6 +96,11 @@ a {
   text-decoration: none;
 }
 
+a:active {
+  text-decoration: none;
+  outline: none;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

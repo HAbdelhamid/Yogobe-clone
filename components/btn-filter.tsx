@@ -1,30 +1,36 @@
-import { useRouter } from "next/router";
-import { debounce } from "lodash";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import styled from "styled-components";
+import GET_VIDEOS from "../gql/queries/videos";
 
-type Props = {};
+const Filter = () => {
+  const { loading, error, data, fetchMore, refetch } = useQuery(GET_VIDEOS);
 
-const Filter = (props: Props) => {
-  const { replace, query } = useRouter();
-
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = debounce(
-    (e) => {
-      replace(`/?q=${e.target.value}`, `/?q=${e.target.value}`, {
-        shallow: true,
-      });
-    },
-    500
-  );
+  const onClickhandler = () => {
+    // let searchParams = new URLSearchParams(window.location.search);
+    // searchParams.set("q", e.target.value);
+    // if (window.history.replaceState) {
+    //   const url =
+    //     window.location.protocol +
+    //     "//" +
+    //     window.location.host +
+    //     window.location.pathname +
+    //     "?" +
+    //     searchParams.toString();
+    //   window.history.replaceState(
+    //     {
+    //       path: url,
+    //     },
+    //     "",
+    //     url
+    //   );
+    // }
+    // refetch({ query: e.target.value });
+  };
 
   return (
     <Container>
-      <SearchInput
-        type="text"
-        placeholder="Search the entire video library"
-        defaultValue={query.q as string}
-        onChange={handleChange}
-      />
+      <button onClick={onClickhandler}></button>
     </Container>
   );
 };
@@ -37,7 +43,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const SearchInput = styled.input`
+const Searchinput = styled.input`
   width: 86%;
   height: 100%;
   padding: 21px 0px;

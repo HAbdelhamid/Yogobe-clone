@@ -29,7 +29,9 @@ function Navbar() {
           </List>
         </StyledNav>
         <Box>
-          <Normalbtn>Log in</Normalbtn>
+          <Link href={"/login"}>
+            <Normalbtn>Log in</Normalbtn>
+          </Link>
           <Bluebtn>Try for free</Bluebtn>
         </Box>
       </Container>

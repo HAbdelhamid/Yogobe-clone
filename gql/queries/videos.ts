@@ -1,13 +1,12 @@
 import { gql } from "@apollo/client";
-
 // TODO: update query by adding filter.
 // look for available args within the videos query,
 // see if you can find anything that can be used for search/filter
 // test in playground
 // category, type, name, instructor ...... pick one -> test
 const GET_VIDEOS = gql`
-  query getvideos($page: Int, $perPage: Int) {
-    videos(page: $page, perPage: $perPage) {
+  query getvideos($page: Int, $perPage: Int, $query: String) {
+    videos(page: $page, perPage: $perPage, query: $query) {
       page
       perPage
       totalCount
@@ -18,6 +17,10 @@ const GET_VIDEOS = gql`
           minutes
         }
         taxonomies {
+          genre {
+            name
+            slug
+          }
           instructors {
             name
           }

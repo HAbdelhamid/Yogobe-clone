@@ -1,11 +1,31 @@
 import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../gql/mutations";
 
-function login() {
+const Login = () => {
+  const [login, { data, loading, error }] = useMutation(LOGIN);
+  // im here
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.persist();
+    const data = new FormData(e.target);
+    try {
+      const res = await login({
+        variables: { email: data.get("email"), password: data.get("password") },
+      });
+      e.target.email.value = "";
+      e.target.password.value = "";
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
-      <Boxinfo>
+      <InfoBox>
         <Infobox>
           <Image src={"/logo.png"} width={120} height={120} alt="" />
           <h2>We are very happy to have you as a member!</h2>
@@ -14,24 +34,25 @@ function login() {
             mental health and wellbeing
           </p>
         </Infobox>
-      </Boxinfo>
-      <Boxlogin>
-        <Loginbox>
+      </InfoBox>
+      <LoginBox>
+        <LoginForm onSubmit={handleSubmit}>
           <h1>Log in</h1>
           <p>
             Log in to access to our video library, online courses and your
             profile
           </p>
-          <input type="text" placeholder="Email" />
-          <input type="text" placeholder="Password" />
-          <button>Log in</button>
-        </Loginbox>
-      </Boxlogin>
+          <input type="email" placeholder="Email" name="email" />
+          <input type="password" placeholder="Password" name="password" />
+          {error && <span>{error.message}</span>}
+          <button type="submit">Log in</button>
+        </LoginForm>
+      </LoginBox>
     </Container>
   );
-}
+};
 
-export default login;
+export default Login;
 
 const Container = styled.div`
   display: flex;
@@ -39,7 +60,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Boxinfo = styled.div`
+const InfoBox = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -53,7 +74,7 @@ const Boxinfo = styled.div`
   background-size: cover;
 `;
 
-const Boxlogin = styled.div`
+const LoginBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +82,7 @@ const Boxlogin = styled.div`
   flex-basis: 100%;
 `;
 
-const Loginbox = styled.div`
+const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   padding: 60px;
@@ -74,6 +95,7 @@ const Loginbox = styled.div`
     border: 1px solid rgb(221, 221, 221);
     max-width: 100%;
     outline: 0px;
+    color: gray;
   }
 
   button {
@@ -88,6 +110,12 @@ const Loginbox = styled.div`
   p {
     margin: 0.3em 0em;
     font-size: 12px;
+  }
+
+  span {
+    font-size: 14px;
+    color: red;
+    margin-bottom: 20px;
   }
 `;
 
