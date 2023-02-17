@@ -2,26 +2,49 @@ import Head from "next/head";
 import Cards from "../components/cards";
 import styled from "styled-components";
 import Filter from "../components/filter";
-import GET_VIDEOS from "../gql/queries/videos";
-import { useQuery } from "@apollo/client";
+import GET_VIDEOS from "../gql/queries/getVideos";
+import { ApolloError, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import FilterBtn from "../components/filterBtn";
+import Navbar from "../components/navbar";
+import client from "../gql/apolloclient";
+import { Video } from "../gql/types";
 
-const Videos = () => {
+type Props = {
+  loading: boolean;
+  error: ApolloError | undefined;
+  data: {
+    videos: {
+      totalCount: number;
+      data: Video[];
+      page: number;
+    };
+  };
+};
+
+const Videos = (props: Props) => {
   const { query } = useRouter();
-  const { loading, error, data, fetchMore, refetch } = useQuery(GET_VIDEOS, {
+  const {
+    data: clientSideRendredData,
+    error,
+    fetchMore,
+    refetch,
+  } = useQuery(GET_VIDEOS, {
     variables: {
       perPage: 9,
       query: "",
     },
   });
+  const { data, loading } = props;
+
   const videos = data?.videos?.data;
 
   useEffect(() => {
     refetch({ query: query.q as string });
   }, [query, refetch]);
 
-  if (loading && !videos) return "Loading...";
+  if (loading && !videos) return null;
   if (error) return `Error! ${error.message}`;
   return (
     <div>
@@ -31,22 +54,39 @@ const Videos = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar />
+
       <Container>
         <Filter />
+        <FilterBtn />
         <Cards
           loadMore={() => {
-            fetchMore({
+            console.log("fetchMore");
+            return fetchMore({
               variables: {
                 page: data.videos.page + 1,
               },
             });
           }}
-          data={data}
+          data={clientSideRendredData}
         />
       </Container>
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const { loading, data } = await client.query({
+    query: GET_VIDEOS,
+    variables: {
+      perPage: 9,
+      query: "",
+    },
+  });
+  // Pass data to the page via props
+  return { props: { data, loading } };
+}
 
 export default Videos;
 
@@ -55,5 +95,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 2em;
+  max-width: 1200px;
+  margin: 2em auto;
+  padding: 0 1em;
 `;

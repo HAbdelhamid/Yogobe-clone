@@ -1,28 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import { useMutation } from "@apollo/client";
-import { LOGIN } from "../gql/mutations";
+import LoginForm from "../components/loginForm";
 
 const Login = () => {
-  const [login, { data, loading, error }] = useMutation(LOGIN);
-  // im here
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    e.persist();
-    const data = new FormData(e.target);
-    try {
-      const res = await login({
-        variables: { email: data.get("email"), password: data.get("password") },
-      });
-      e.target.email.value = "";
-      e.target.password.value = "";
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <Container>
       <InfoBox>
@@ -36,17 +17,7 @@ const Login = () => {
         </Infobox>
       </InfoBox>
       <LoginBox>
-        <LoginForm onSubmit={handleSubmit}>
-          <h1>Log in</h1>
-          <p>
-            Log in to access to our video library, online courses and your
-            profile
-          </p>
-          <input type="email" placeholder="Email" name="email" />
-          <input type="password" placeholder="Password" name="password" />
-          {error && <span>{error.message}</span>}
-          <button type="submit">Log in</button>
-        </LoginForm>
+        <LoginForm />
       </LoginBox>
     </Container>
   );
@@ -80,43 +51,6 @@ const LoginBox = styled.div`
   align-items: center;
   flex-direction: column;
   flex-basis: 100%;
-`;
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 60px;
-
-  input {
-    padding: 1em;
-    margin: 0.4em 0em;
-    border-radius: 3px;
-    background: white;
-    border: 1px solid rgb(221, 221, 221);
-    max-width: 100%;
-    outline: 0px;
-    color: gray;
-  }
-
-  button {
-    background: #56b9e5;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    padding: 1em;
-    max-width: 100%;
-    margin: 0.4em 0em;
-  }
-  p {
-    margin: 0.3em 0em;
-    font-size: 12px;
-  }
-
-  span {
-    font-size: 14px;
-    color: red;
-    margin-bottom: 20px;
-  }
 `;
 
 const Infobox = styled.div`

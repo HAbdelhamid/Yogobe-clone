@@ -4,9 +4,12 @@ import styled from "styled-components";
 import Link from "next/link";
 import { PlayCircleOutline } from "@styled-icons/evaicons-outline/PlayCircleOutline";
 import { CameraVideo } from "@styled-icons/bootstrap/CameraVideo";
-// const playIcon = styled(PlayCircleOutline)``;
+import { useQuery } from "@apollo/client";
+import { USER } from "../gql/queries/currentUser";
 
 function Navbar() {
+  const { loading, data } = useQuery(USER);
+
   return (
     <header>
       <Container>
@@ -28,12 +31,28 @@ function Navbar() {
             <Listitem>More</Listitem>
           </List>
         </StyledNav>
-        <Box>
-          <Link href={"/login"}>
-            <Normalbtn>Log in</Normalbtn>
-          </Link>
-          <Bluebtn>Try for free</Bluebtn>
-        </Box>
+        {loading ? (
+          <UserLoadingSkeleton>
+            <p></p>
+            <div></div>
+          </UserLoadingSkeleton>
+        ) : (
+          <Box>
+            {data?.currentUser ? (
+              <>
+                <p>{data.currentUser.firstName}</p>
+                <Image src={"/avatar.svg"} alt="" width={40} height={40} />
+              </>
+            ) : (
+              <>
+                <Link href={"/login"}>
+                  <Normalbtn>Log in</Normalbtn>
+                </Link>
+                <Bluebtn>Try for free</Bluebtn>
+              </>
+            )}
+          </Box>
+        )}
       </Container>
     </header>
   );
@@ -45,8 +64,56 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   margin: 0px auto;
-  max-width: 86%;
+  padding: 0 1em;
+  max-width: 1200px;
   max-height: 75px;
+`;
+
+const UserLoadingSkeleton = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-basis: 60%;
+  p {
+    margin-right: 20px;
+    width: 20%;
+    height: 20px;
+
+    border-radius: 3px;
+    background: linear-gradient(
+      120deg,
+      #e5e5e5 30%,
+      #f2f2f2 38%,
+      #f2f2f2 40%,
+      #e5e5e5 48%
+    );
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: load 2s infinite;
+  }
+  
+  div{
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    background: linear-gradient(
+      120deg,
+      #e5e5e5 30%,
+      #f2f2f2 38%,
+      #f2f2f2 40%,
+      #e5e5e5 48%
+    );
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: load 2s infinite;
+  }
+  @keyframes load {
+    100% {
+      background-position: -100% 0;
+    }
+  }
+  }
 `;
 
 const Logo = styled.div`
@@ -67,12 +134,15 @@ const Box = styled.div`
   justify-content: end;
   align-items: center;
   flex-basis: 60%;
+  p {
+    margin-right: 20px;
+  }
 `;
 
 const Bluebtn = styled.a`
   font-size: 13px;
   padding: 8px 10px;
-  margin: 6px;
+
   border-radius: 3px;
   background: rgb(86, 185, 229);
   color: rgb(255, 255, 255);

@@ -12,6 +12,7 @@ const GET_VIDEOS = gql`
       totalCount
       data {
         id
+        identifier
         thumbnailUrl
         meta {
           minutes
@@ -27,6 +28,12 @@ const GET_VIDEOS = gql`
           flavor {
             name
           }
+        }
+        primaryStyle {
+          genres
+          name
+          types
+          slug
         }
         content {
           title

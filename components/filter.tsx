@@ -38,7 +38,7 @@ const Container = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 86%;
+  width: 100%;
   height: 100%;
   padding: 21px 0px;
   border-radius: 5px;
