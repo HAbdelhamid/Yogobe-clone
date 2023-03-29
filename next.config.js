@@ -3,7 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
   // srr: true,
   images: {
-    domains: ["localhost", "yogobe.23video.com"],
+    domains: [
+      "localhost",
+      "yogobe.23video.com",
+      "devenv.yogobe.com",
+      "yogobe-assets-shrine-staging.s3.eu-north-1.amazonaws.com",
+    ],
   },
 };
 

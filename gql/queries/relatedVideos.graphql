@@ -1,0 +1,9 @@
+query getRelatedVideos($id: ID!) {
+  relatedVideos(id: $id) {
+    identifier
+    shortDescription
+    minutes
+    title
+    thumbnailUrl
+  }
+}

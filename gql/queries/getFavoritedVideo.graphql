@@ -1,0 +1,8 @@
+query getFavorited($id: ID!) {
+  getFavoriteVideos(id: $id) {
+    data {
+      favorited
+      id
+    }
+  }
+}

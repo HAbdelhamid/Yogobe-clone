@@ -12,7 +12,6 @@ const Link = new HttpLink({
 });
 
 const client = new ApolloClient({
-  ssrMode: true,
   uri: "http://localhost:3000/api/graphql",
   link: from([setAuthorizationLink, Link]),
   cache: new InMemoryCache({
@@ -29,6 +28,9 @@ const client = new ApolloClient({
             },
           },
           getFavoriteVideos: {
+            merge: true,
+          },
+          video: {
             merge: true,
           },
         },

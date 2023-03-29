@@ -2,50 +2,63 @@ import Head from "next/head";
 import Cards from "../components/cards";
 import styled from "styled-components";
 import Filter from "../components/filter";
-import GET_VIDEOS from "../gql/queries/getVideos";
-import { ApolloError, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FilterBtn from "../components/filterBtn";
 import Navbar from "../components/navbar";
 import client from "../gql/apolloclient";
-import { Video } from "../gql/types";
+import {
+  GetvideosDocument,
+  GetvideosQuery,
+  useGetvideosQuery,
+} from "../gql/generated";
 
 type Props = {
-  loading: boolean;
-  error: ApolloError | undefined;
-  data: {
-    videos: {
-      totalCount: number;
-      data: Video[];
-      page: number;
-    };
-  };
+  data: GetvideosQuery;
 };
 
-const Videos = (props: Props) => {
+const HomePage = (props: Props) => {
+  const [showLoadMore, setShowLoadMore] = useState<boolean>();
+  const [totalCountChanged, setTotalCountChanged] = useState<boolean>();
   const { query } = useRouter();
-  const {
-    data: clientSideRendredData,
-    error,
-    fetchMore,
-    refetch,
-  } = useQuery(GET_VIDEOS, {
+
+  const { data, error, fetchMore, refetch, loading } = useGetvideosQuery({
     variables: {
       perPage: 9,
       query: "",
     },
   });
-  const { data, loading } = props;
 
-  const videos = data?.videos?.data;
+  const Videos = data?.videos?.data || props.data?.videos?.data;
+  const totalCount = data?.videos?.totalCount || props.data?.videos?.totalCount;
+  const nextPage = data?.videos?.page || props.data?.videos?.page;
+
+  console.log(data);
 
   useEffect(() => {
-    refetch({ query: query.q as string });
+    if (totalCount > Videos.length) {
+      setShowLoadMore(true);
+    } else {
+      setShowLoadMore(false);
+    }
+  }, [totalCount, Videos.length]);
+
+  useEffect(() => {
+    if (!query.q) {
+      setTotalCountChanged(false);
+    }
+    refetch({ query: query.q as string }).then(() => {
+      if (!query.q) {
+        setTotalCountChanged(false);
+      } else {
+        setTotalCountChanged(true);
+      }
+    });
   }, [query, refetch]);
 
-  if (loading && !videos) return null;
+  if (loading && !Videos) return null;
   if (error) return `Error! ${error.message}`;
+
   return (
     <div>
       <Head>
@@ -55,47 +68,64 @@ const Videos = (props: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-
       <Container>
         <Filter />
         <FilterBtn />
+        <ResultsCount>
+          {totalCount} results
+          {totalCountChanged && ` for keyword "${query.q}"`}
+        </ResultsCount>
         <Cards
           loadMore={() => {
             console.log("fetchMore");
             return fetchMore({
               variables: {
-                page: data.videos.page + 1,
+                page: nextPage + 1,
               },
             });
           }}
-          data={clientSideRendredData}
+          data={Videos}
+          showLoadMoreBtn={showLoadMore}
         />
       </Container>
     </div>
   );
 };
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const { loading, data } = await client.query({
-    query: GET_VIDEOS,
+export const getServerSideProps = async () => {
+  const { data } = await client.query<GetvideosQuery>({
+    query: GetvideosDocument,
     variables: {
       perPage: 9,
       query: "",
     },
   });
-  // Pass data to the page via props
-  return { props: { data, loading } };
-}
 
-export default Videos;
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+export default HomePage;
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 2em auto;
-  padding: 0 1em;
+  padding: 0 20px;
+`;
+
+const ResultsCount = styled.div`
+  display: flex;
+  justify-content: start;
+  width: 100%;
+  margin-top: 3em;
+  margin-bottom: 1em;
+  font-size: 13px;
+  font-weight: 600;
 `;

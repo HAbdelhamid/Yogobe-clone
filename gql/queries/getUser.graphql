@@ -1,0 +1,9 @@
+query getUserData($id: ID!) {
+  getUser(id: $id) {
+    id
+    firstName
+    assets {
+      avatar
+    }
+  }
+}

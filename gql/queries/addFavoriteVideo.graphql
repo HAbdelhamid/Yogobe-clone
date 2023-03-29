@@ -1,0 +1,8 @@
+mutation addFavoritedVideo($videoId: ID!) {
+  addFavoriteVideo(videoId: $videoId) {
+    video {
+      favorited
+      id
+    }
+  }
+}

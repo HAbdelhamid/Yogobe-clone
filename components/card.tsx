@@ -1,132 +1,93 @@
 import styled from "styled-components";
-import { FavoriteBorder } from "@styled-icons/material/FavoriteBorder";
-import { Favorite } from "@styled-icons/material/Favorite";
 import { ThreeDots } from "@styled-icons/bootstrap/ThreeDots";
 import { PlayCircle } from "@styled-icons/bootstrap/PlayCircle";
-import React, { useMemo, useState } from "react";
+import { Share } from "@styled-icons/fluentui-system-filled/Share";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMutation, useQuery } from "@apollo/client";
-import { currentUser, Video } from "../gql/types";
-import { ADD_FAVORITE } from "../gql/queries/addFavoriteVideo";
-import { GET_FAVORITE_VIDEOS } from "../gql/queries/getFavoritedVideo";
-import { DELETE_FAVORITED_VIDEOS } from "../gql/queries/deleteFavoritedVideo";
-import Modal from "./modal";
-import LoginForm from "./loginForm";
 import Link from "next/link";
-import { USER } from "../gql/queries/currentUser";
 import FavoriteBtn from "./favoriteBtn";
+// import { Videos } from "../gql/types";
+import {
+  GetvideosQuery,
+  LastViewedSeassionsQuery,
+  Video,
+  VideosDataFieldFragment,
+} from "../gql/generated";
+import Modal from "./modal";
+
+type Videos = VideosDataFieldFragment[];
 
 type Props = {
-  video: Video;
-  favoritedVideos: any;
-  // currentUserData: currentUser;
+  video: Videos[number];
+  // favoritedVideos: Video;
 };
 
 const Card = ({ video }: Props) => {
-  // const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [openSharePopup, setOpenSharePopup] = useState(false);
+  const [inputValue, setInputValue] = useState(
+    `localhost:3000/Videos/${video.identifier}`
+  );
+  const [buttonText, setButtonText] = useState("Copy");
   const route = useRouter();
-  // const user = useQuery(USER);
-  // const favoritedVideos = useQuery(GET_FAVORITE_VIDEOS, {
-  //   variables: {
-  //     id: user?.data?.currentUser?.id,
-  //   },
-  // });
-  // const [addFavoriteVideo, { loading: addLoading }] = useMutation(
-  //   ADD_FAVORITE,
-  //   {
-  //     update(cache, { data: { addFavoriteVideo } }) {
-  //       cache.updateQuery(
-  //         {
-  //           query: GET_FAVORITE_VIDEOS,
-  //           variables: {
-  //             id: currentUserData?.currentUser?.id,
-  //           },
-  //         },
-  //         (data) => {
-  //           console.log("updatequery data", data);
-  //           console.log("addfavorited", addFavoriteVideo);
-  //           return {
-  //             getFavoriteVideos: {
-  //               data: [...data.getFavoriteVideos.data, addFavoriteVideo.video],
-  //             },
-  //           };
-  //         }
-  //       );
-  //     },
-  //   }
-  // );
-  // const [deleteFavoritedVideo, { loading: deleteLoading }] = useMutation(
-  //   DELETE_FAVORITED_VIDEOS,
-  //   {
-  //     update(cache) {
-  //       cache.updateQuery(
-  //         {
-  //           query: GET_FAVORITE_VIDEOS,
-  //           variables: {
-  //             id: currentUserData?.currentUser?.id,
-  //           },
-  //         },
-  //         (data) => {
-  //           return {
-  //             getFavoriteVideos: {
-  //               data: data.getFavoriteVideos.data.filter(
-  //                 (item: any) => item.id !== video.id
-  //               ),
-  //             },
-  //           };
-  //         }
-  //       );
-  //     },
-  //   }
-  // );
 
-  // const currentUserData: currentUser = user.data;
+  const { thumbnailUrl, identifier } = video;
+  const popupRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (!popupRef.current?.contains(e.target as Node)) {
+        setShowPopup(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
-  // const favorites = useMemo(
-  //   () =>
-  //     favoritedVideos.data?.getFavoriteVideos.data.map((item: any) => {
-  //       return item.id;
-  //     }),
-  //   [favoritedVideos]
-  // );
+  const handleModalClose = () => {
+    setOpenSharePopup(false);
+  };
 
-  // const handleFavorite = () => {
-  //   if (!currentUserData.currentUser) {
-  //     console.log("opened", showLoginModal);
-  //     setShowLoginModal(true);
-  //   } else {
-  //     if (favorites?.includes(video.id)) {
-  //       deleteFavoritedVideo({
-  //         variables: {
-  //           videoId: video.id,
-  //         },
-  //       });
-  //     } else {
-  //       addFavoriteVideo({
-  //         variables: {
-  //           videoId: video.id,
-  //         },
-  //       });
-  //     }
-  //   }
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(inputValue);
+    setButtonText("Copied!");
+  };
 
   return (
     <>
+      {openSharePopup && (
+        <Modal open={openSharePopup} close={handleModalClose}>
+          <ModalWrap>
+            <h3>Share</h3>
+            <p>Copy this URL to share:</p>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            <CopyBtn onClick={handleCopyToClipboard}>{buttonText}</CopyBtn>
+          </ModalWrap>
+        </Modal>
+      )}
       <CardBox>
         <ImageContainer>
-          <Link href={`/Videos/${video.identifier}`}>
-            {video.taxonomies.flavor && (
+          <Link href={`/Videos/${identifier}`}>
+            {video?.taxonomies?.flavor && (
               <TaxonomyTag>{video.taxonomies.flavor.name}</TaxonomyTag>
             )}
             <PlayButton>
               <PlayCircleIcon size="70" />
             </PlayButton>
-            <Duration>{video.meta.minutes} min</Duration>
+            <Duration>{video.meta?.minutes} min</Duration>
 
             <ThumbnailImage
-              src={video.thumbnailUrl}
+              src={thumbnailUrl || ""}
               width={300}
               height={250}
               alt="hi"
@@ -134,51 +95,46 @@ const Card = ({ video }: Props) => {
           </Link>
         </ImageContainer>
         <Box>
-          <h2>{video.content.title}</h2>
+          <h2>{video?.content?.title}</h2>
           <p>
             <StyledLink
               onClick={() => {
                 route.push({
                   pathname: "/",
-                  query: { q: video.primaryStyle.name },
+                  query: { q: video.primaryStyle?.name },
                 });
               }}
             >
               {video.primaryStyle && video.primaryStyle.name}
             </StyledLink>{" "}
             with{" "}
-            <StyledLink>{video.taxonomies.instructors[0]?.name}</StyledLink>
+            <StyledLink>{video.taxonomies?.instructors?.[0]?.name}</StyledLink>
           </p>
-          <Description>{video.content.shortDescription}</Description>
+          <Description>{video?.shortDescription}</Description>
           {/* {isLogged && <p style={{ color: "red" }}>{isLogged}</p>} */}
-          <ActionsContainer>
+          <ActionsContainer ref={popupRef}>
             <FavoriteBtn video={video} />
-            {/* <FavoriteButton onClick={handleFavorite}>
-              {favorites?.includes(video.id) ? (
-                <>
-                  {deleteLoading ? (
-                    <SpinnerStyles />
-                  ) : (
-                    <>
-                      <FavoriteIcon size="18" /> <Strong>SAVED</Strong>
-                    </>
-                  )}
-                </>
-              ) : (
-                <>
-                  {addLoading ? (
-                    <SpinnerStyles />
-                  ) : (
-                    <>
-                      <FavoriteBorder size="18" />
-                      <Strong>SAVE TO FAVORITE</Strong>
-                    </>
-                  )}
-                </>
+            <MenuButton
+              onClick={() => {
+                setShowPopup(true);
+              }}
+            >
+              <OptionBtn size="25" />
+              {showPopup && (
+                <OptionPopup>
+                  <ul>
+                    <li>
+                      <ShareBtn
+                        onClick={() => {
+                          setOpenSharePopup(true);
+                        }}
+                      >
+                        <Share size={16} /> Share
+                      </ShareBtn>
+                    </li>
+                  </ul>
+                </OptionPopup>
               )}
-            </FavoriteButton> */}
-            <MenuButton>
-              <ThreeDots size="25" />
             </MenuButton>
           </ActionsContainer>
         </Box>
@@ -188,28 +144,6 @@ const Card = ({ video }: Props) => {
 };
 
 export default Card;
-
-const SpinnerStyles = styled.div`
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: spin 0.8s ease infinite;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-`;
-
-const Strong = styled.strong`
-  margin-left: 6px;
-`;
 
 const Duration = styled.span`
   position: absolute;
@@ -234,9 +168,17 @@ const PlayCircleIcon = styled(PlayCircle)`
   font-weight: 1em;
 `;
 
-const FavoriteIcon = styled(Favorite)`
-  color: #129edc;
+const OptionBtn = styled(ThreeDots)`
+  color: black;
   font-weight: 1em;
+`;
+
+const ShareBtn = styled.button`
+  display: flex;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
 `;
 
 const StyledLink = styled.button`
@@ -251,15 +193,6 @@ const StyledLink = styled.button`
 const Description = styled.p`
   font-size: 14px;
   color: #7d7d7d;
-`;
-
-const FavoriteButton = styled.button`
-  font-size: 11px;
-  color: #242424;
-  flex: 0 auto;
-  border: none;
-  background: none;
-  cursor: pointer;
 `;
 
 const TaxonomyTag = styled.span`
@@ -278,7 +211,34 @@ const ImageContainer = styled.div`
   position: relative;
 `;
 
-const MenuButton = styled.div``;
+const MenuButton = styled.button`
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
+const OptionPopup = styled.div`
+  position: absolute;
+  top: 8px;
+  left: 1px;
+  z-index: 1;
+  padding: 15px;
+  // height: 100%;
+  // width: 100%;
+
+  background: white;
+  border: solid 0.1px black;
+  border-radius: 3px;
+
+  li {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+  }
+`;
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -310,4 +270,30 @@ const CardBox = styled.div`
 
 const Box = styled.div`
   padding: 2em;
+`;
+
+const ModalWrap = styled.div`
+  padding: 2em;
+  p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  input {
+    border-radius: 3px;
+    border-right: none;
+    background: white;
+    color: black;
+    padding: 10px;
+    border: solid 1px grey;
+  }
+`;
+
+const CopyBtn = styled.button`
+  padding: 11px;
+  margin-left: -4px;
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background: #56b9e5;
+  cursor: pointer;
 `;

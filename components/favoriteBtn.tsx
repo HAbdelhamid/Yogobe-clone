@@ -1,60 +1,71 @@
-import { useMutation, useQuery } from "@apollo/client";
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { FavoriteBorder } from "@styled-icons/material/FavoriteBorder";
 import { Favorite } from "@styled-icons/material/Favorite";
-import { ADD_FAVORITE } from "../gql/queries/addFavoriteVideo";
-import { USER } from "../gql/queries/currentUser";
-import { DELETE_FAVORITED_VIDEOS } from "../gql/queries/deleteFavoritedVideo";
-import { GET_FAVORITE_VIDEOS } from "../gql/queries/getFavoritedVideo";
-import { currentUser, Video } from "../gql/types";
-import Modal from "./modal";
-import LoginForm from "./loginForm";
+import LoginModal from "./loginModal";
+import {
+  AddFavoritedVideoMutation,
+  GetFavoritedDocument,
+  GetFavoritedQuery,
+  useAddFavoritedVideoMutation,
+  useCurrentUserQuery,
+  useDeleteFavoriteVideoMutation,
+  useGetFavoritedQuery,
+  Video,
+  VideosDataFieldFragment,
+} from "../gql/generated";
+import { GetFavoriteVideos, Videos } from "../gql/types";
+import { ApolloCache } from "@apollo/client";
 
 type Props = {
-  video: Video;
+  video: VideosDataFieldFragment;
 };
+
+// type Data = {
+//   cache: ApolloCache<any>;
+//   data: {
+//     addFavoriteVideoData: AddFavoritedVideoMutation;
+//   };
+// };
 
 const FavoriteBtn = ({ video }: Props) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const user = useQuery(USER);
-  const currentUserData: currentUser = user.data;
-  const favoritedVideos = useQuery(GET_FAVORITE_VIDEOS, {
+  const user = useCurrentUserQuery();
+  const currentUserData = user?.data;
+  const favoritedVideos = useGetFavoritedQuery({
     variables: {
-      id: user?.data?.currentUser?.id,
+      id: user?.data?.currentUser?.id as string,
     },
   });
-  const [addFavoriteVideo, { loading: addLoading }] = useMutation(
-    ADD_FAVORITE,
-    {
-      update(cache, { data: { addFavoriteVideo } }) {
+  const [addFavoriteVideo, { loading: addLoading }] =
+    useAddFavoritedVideoMutation({
+      update(cache, { data: addFavoriteVideo }) {
         cache.updateQuery(
           {
-            query: GET_FAVORITE_VIDEOS,
+            query: GetFavoritedDocument,
             variables: {
               id: currentUserData?.currentUser?.id,
             },
           },
           (data) => {
-            console.log("updatequery data", data);
-            console.log("addfavorited", addFavoriteVideo);
             return {
               getFavoriteVideos: {
-                data: [...data.getFavoriteVideos.data, addFavoriteVideo.video],
+                data: [
+                  ...(data?.getFavoriteVideos?.data ?? []),
+                  addFavoriteVideo?.addFavoriteVideo?.video,
+                ],
               },
             };
           }
         );
       },
-    }
-  );
-  const [deleteFavoritedVideo, { loading: deleteLoading }] = useMutation(
-    DELETE_FAVORITED_VIDEOS,
-    {
+    });
+  const [deleteFavoritedVideo, { loading: deleteLoading }] =
+    useDeleteFavoriteVideoMutation({
       update(cache) {
         cache.updateQuery(
           {
-            query: GET_FAVORITE_VIDEOS,
+            query: GetFavoritedDocument,
             variables: {
               id: currentUserData?.currentUser?.id,
             },
@@ -62,7 +73,7 @@ const FavoriteBtn = ({ video }: Props) => {
           (data) => {
             return {
               getFavoriteVideos: {
-                data: data.getFavoriteVideos.data.filter(
+                data: data?.getFavoriteVideos?.data.filter(
                   (item: any) => item.id !== video.id
                 ),
               },
@@ -70,18 +81,17 @@ const FavoriteBtn = ({ video }: Props) => {
           }
         );
       },
-    }
-  );
+    });
 
   const favorites = useMemo(
     () =>
-      favoritedVideos.data?.getFavoriteVideos.data.map((item: any) => {
+      favoritedVideos?.data?.getFavoriteVideos?.data.map((item) => {
         return item.id;
       }),
     [favoritedVideos]
   );
   const handleFavorite = () => {
-    if (!currentUserData.currentUser) {
+    if (!currentUserData?.currentUser) {
       console.log("opened", showLoginModal);
       setShowLoginModal(true);
     } else {
@@ -106,9 +116,7 @@ const FavoriteBtn = ({ video }: Props) => {
   };
   return (
     <div>
-      <Modal open={showLoginModal} close={handleModalClose}>
-        <LoginForm />
-      </Modal>
+      <LoginModal open={showLoginModal} close={handleModalClose} />
       <FavoriteButton onClick={handleFavorite}>
         {favorites?.includes(video.id) ? (
           <>

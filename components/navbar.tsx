@@ -4,11 +4,11 @@ import styled from "styled-components";
 import Link from "next/link";
 import { PlayCircleOutline } from "@styled-icons/evaicons-outline/PlayCircleOutline";
 import { CameraVideo } from "@styled-icons/bootstrap/CameraVideo";
-import { useQuery } from "@apollo/client";
-import { USER } from "../gql/queries/currentUser";
+import LogoutButton from "./logoutBtn";
+import { useCurrentUserQuery } from "../gql/generated";
 
 function Navbar() {
-  const { loading, data } = useQuery(USER);
+  const { loading, data } = useCurrentUserQuery();
 
   return (
     <header>
@@ -41,14 +41,20 @@ function Navbar() {
             {data?.currentUser ? (
               <>
                 <p>{data.currentUser.firstName}</p>
-                <Image src={"/avatar.svg"} alt="" width={40} height={40} />
+                <Link href={`/dashboard`}>
+                  <Image src={"/avatar.svg"} alt="" width={40} height={40} />
+                </Link>
+
+                <LogoutButton />
               </>
             ) : (
               <>
                 <Link href={"/login"}>
                   <Normalbtn>Log in</Normalbtn>
                 </Link>
-                <Bluebtn>Try for free</Bluebtn>
+                <Link href={"/signup"}>
+                  <Bluebtn>Try for free</Bluebtn>
+                </Link>
               </>
             )}
           </Box>
@@ -64,8 +70,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   margin: 0px auto;
-  padding: 0 1em;
-  max-width: 1200px;
+  padding: 0 20px;
+  max-width: 1280px;
   max-height: 75px;
 `;
 
@@ -139,7 +145,7 @@ const Box = styled.div`
   }
 `;
 
-const Bluebtn = styled.a`
+const Bluebtn = styled.button`
   font-size: 13px;
   padding: 8px 10px;
 

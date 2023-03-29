@@ -1,0 +1,7 @@
+mutation deleteFavoriteVideo($videoId: ID!) {
+  deleteFavoriteVideo(videoId: $videoId) {
+    video {
+      favorited
+    }
+  }
+}

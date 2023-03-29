@@ -1,0 +1,24 @@
+mutation signup(
+  $firstName: String!
+  $lastName: String
+  $email: String!
+  $password: String!
+  $country: String
+  $platform: DevicePlatformKind!
+) {
+  signUpV2(
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    password: $password
+    country: $country
+    platform: $platform
+  ) {
+    errors {
+      message
+    }
+    user {
+      id
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -7,23 +6,41 @@ import FavoriteBtn from "../../components/favoriteBtn";
 import { ThreeDots } from "@styled-icons/bootstrap/ThreeDots";
 import Navbar from "../../components/navbar";
 import VideoJS from "../../components/videojs";
-import { GET_VIDEO } from "../../gql/queries/getVideo";
 
-const VideoPage = () => {
+import Image from "next/image";
+import Link from "next/link";
+import client from "../../gql/apolloclient";
+
+import ReactHtmlParser from "react-html-parser";
+import {
+  GetVideoDocument,
+  useGetRelatedVideosQuery,
+  Video,
+} from "../../gql/generated";
+import RelatedVideosLoaddingSkeleton from "../../components/relatedVideosLoaddingSkeleton";
+
+type Props = {
+  data: {
+    video: Video;
+  };
+};
+
+const VideoPage = (props: Props) => {
   const router = useRouter();
   const { id } = router.query;
-  const { loading, data, error } = useQuery(GET_VIDEO, {
+
+  const relatedVideo = useGetRelatedVideosQuery({
     variables: {
-      id: id,
+      id: id as string,
     },
   });
+
+  console.log("related", relatedVideo);
   const playerRef = React.useRef(null);
 
-  if (loading) return null;
-  if (error) return `Error! ${error.message}`;
+  const { data } = props;
 
-  const { hls, title, longDescription } = data.video || {};
-  console.log("videos data", data, hls);
+  const { hls, title, longDescription } = data.video;
 
   const videoJsOptions = {
     controls: true,
@@ -35,6 +52,7 @@ const VideoPage = () => {
         type: "application/x-mpegURL",
       },
     ],
+    autoplay: false,
   };
 
   const handlePlayerReady = (player: any) => {
@@ -50,22 +68,29 @@ const VideoPage = () => {
     });
   };
 
+  const skeletons = [];
+  for (let i = 0; i < 4; i++) {
+    skeletons.push(<RelatedVideosLoaddingSkeleton key={i} />);
+  }
+
   return (
     <>
       <Navbar />
       <Container>
-        <Video>
+        <VideoSection>
           <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
           <VideoDetails>
             <Wrap>
               <Title>
                 <h1>{title}</h1>
               </Title>
-              <Description>{longDescription}</Description>
+              <Description>{ReactHtmlParser(longDescription)}</Description>
               <Taxonomies>
                 <div>
-                  <a href="#">{data.video.primaryStyle.name}</a> With{" "}
-                  <a href="#">{data.video.taxonomies.instructors[0].name}</a>
+                  <a href="#">{data?.video?.primaryStyle?.name}</a> With{" "}
+                  <a href="#">
+                    {data?.video?.taxonomies?.instructors?.[0]?.name}
+                  </a>
                 </div>
                 <dl>
                   <dt>Duration:</dt>
@@ -73,7 +98,7 @@ const VideoPage = () => {
                 </dl>
                 <dl>
                   <dt>Needs:</dt>
-                  <dd>{data.video.taxonomies.needs[0].name}</dd>
+                  <dd>{data.video?.taxonomies?.needs?.[0]?.name}</dd>
                 </dl>
               </Taxonomies>
               <ActionsContainer>
@@ -86,16 +111,66 @@ const VideoPage = () => {
           </VideoDetails>
 
           <div></div>
-        </Video>
+        </VideoSection>
 
-        <RelatedVideos>
+        <RelatedVideosSection>
           <h5>Related Videos</h5>
-          <div></div>
-        </RelatedVideos>
+          {relatedVideo.loading ? (
+            <>{skeletons}</>
+          ) : (
+            <div>
+              {relatedVideo?.data?.relatedVideos?.map(
+                (video, index: number) => {
+                  return (
+                    <Link key={index} href={`/Videos/${video?.identifier}`}>
+                      <Box>
+                        <div>
+                          <ImageContainer>
+                            <Duration>{video?.minutes} min</Duration>
+                            <ThumbnailImage
+                              src={video?.thumbnailUrl as string}
+                              alt=""
+                              width={110}
+                              height={60}
+                            />
+                          </ImageContainer>
+                        </div>
+
+                        <div>
+                          <h5>{video?.title.slice(0, 20)}</h5>
+                          <ShortDescription>
+                            {video?.shortDescription.slice(0, 45)}
+                          </ShortDescription>
+                        </div>
+                      </Box>
+                    </Link>
+                  );
+                }
+              )}
+            </div>
+          )}
+        </RelatedVideosSection>
       </Container>
     </>
   );
 };
+
+export async function getServerSideProps(context: { query: { id: any } }) {
+  const id = context.query.id;
+  // Fetch data from external API
+  const { data } = await client.query({
+    query: GetVideoDocument,
+    variables: {
+      id: id,
+    },
+  });
+  // Pass data to the page via props
+  return {
+    props: {
+      data,
+    },
+  };
+}
 
 export default VideoPage;
 
@@ -106,11 +181,61 @@ const Container = styled.div`
   margin-top: 40px;
 `;
 
-const RelatedVideos = styled.div``;
+// const LoadingSkeletonShortDescription = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-const Video = styled.div`
+const RelatedVideosSection = styled.div`
+  width: 30%;
+  padding-left: 20px;
+
+  h5 {
+    margin-bottom: 10px;
+  }
+`;
+
+const ShortDescription = styled.p`
+  font-size: 13px;
+  font-weight: 400;
+`;
+
+const ThumbnailImage = styled(Image)``;
+const Duration = styled.span`
+  position: absolute;
+  background: black;
+  bottom: 5px;
+  right: 1px;
+  color: white;
+  padding: 3px;
+  margin: 3px;
+  border-radius: 5px;
+  font-size: 11px;
+`;
+
+const VideoSection = styled.div`
   display: block;
-  width: 80%;
+  width: 70%;
+`;
+
+const Box = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+
+  p {
+    font-size: 13px;
+    font-weight: 300;
+    color: #7d7d7d;
+  }
+  h5 {
+    font-size: 13;
+    font-weight: 600;
+  }
+`;
+
+const ImageContainer = styled.div`
+  margin-right: 10px;
+  position: relative;
 `;
 
 const Wrap = styled.div`
@@ -146,6 +271,10 @@ const Description = styled.div`
   border-right: 1px solid rgb(238, 238, 238);
   font-size: 13px;
   color: #7d7d7d;
+
+  a {
+    color: #129edc;
+  }
 `;
 
 const Taxonomies = styled.div`

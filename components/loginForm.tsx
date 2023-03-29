@@ -1,22 +1,24 @@
-import { useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import { LOGIN } from "../gql/queries/login";
+import { useLoginMutation } from "../gql/generated";
 type FromFields = {
   email: { value: string };
   password: { value: string };
 };
 const LoginForm = () => {
-  const [login, { data, loading, error }] = useMutation(LOGIN);
+  const [login, { loading, error }] = useLoginMutation();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     e.persist();
     const data = new FormData(e.target as HTMLFormElement);
+
     try {
       const res = await login({
-        variables: { email: data.get("email"), password: data.get("password") },
+        variables: {
+          email: data.get("email") as string,
+          password: data.get("password") as string,
+        },
       });
       const target = e.target as typeof e.target & FromFields;
       target.email.value = "";

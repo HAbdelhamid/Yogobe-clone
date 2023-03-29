@@ -1,0 +1,39 @@
+fragment videosDataField on Video {
+  identifier
+  kind
+  id
+  thumbnailUrl
+  hls
+  shortDescription
+  meta {
+    minutes
+  }
+  taxonomies {
+    styles {
+      slug
+    }
+    genre {
+      genres
+      name
+      slug
+    }
+    instructors {
+      slug
+      name
+    }
+    flavor {
+      name
+    }
+  }
+
+  primaryStyle {
+    genres
+    name
+    slug
+    types
+  }
+  content {
+    title
+    shortDescription
+  }
+}

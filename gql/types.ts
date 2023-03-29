@@ -33,14 +33,73 @@ export type Content = {
   shortDescription: string;
 };
 
+export type Videos = {
+  id: string;
+  identifier: string;
+  thumbnailUrl?: string | null;
+  longDescription: string;
+  shortDescription: string;
+  meta?: {
+    __typename?: "VideoMeta";
+    minutes?: number | null;
+  } | null;
+  taxonomies: {
+    __typename?: "Taxonomy";
+    genre?: {
+      __typename?: "Term";
+      name?: string | null;
+      slug?: string | null;
+    } | null;
+    instructors?: Array<{
+      __typename?: "Instructor";
+      name?: string | null;
+    } | null> | null;
+    flavor?: {
+      __typename?: "Term";
+      name?: string | null;
+    } | null;
+  };
+  primaryStyle?: {
+    __typename?: "Term";
+    genres?: Array<string | null> | null;
+    name?: string | null;
+    types?: Array<string | null> | null;
+    slug?: string | null;
+  } | null;
+  content?: {
+    __typename?: "VideoContent";
+    title?: string | null;
+    shortDescription?: string | null;
+  } | null;
+};
+
+export type VideosOldTypes = {
+  id: string | undefined;
+  identifier: string | undefined;
+  thumbnailUrl?: string | undefined;
+  shortDescription?: string | undefined;
+  meta: Meta | undefined;
+  taxonomies: Taxonomies | undefined;
+  primaryStyle?: PrimaryStyle | undefined;
+  content: Content | undefined;
+};
+
 export type Video = {
+  shortDescription: string;
   id: string;
   identifier: string;
   thumbnailUrl: string;
-  meta: Meta;
-  taxonomies: Taxonomies;
-  primaryStyle: PrimaryStyle;
-  content: Content;
+  hls: string;
+  title: string;
+  longDescription: string;
+  minutes: number;
+  primaryStyle: {
+    name: string;
+  };
+  taxonomies: {
+    instructors: [{ name: string }];
+    needs: [{ name: string }];
+  };
 };
 
 export type Login = {
@@ -77,4 +136,12 @@ export type GetFavoriteVideos = {
   getFavoriteVideos: {
     data: FavoritedData;
   };
+};
+
+export type RelatedVideos = {
+  identifier: string;
+  shortDescription: string;
+  minutes: number;
+  title: string;
+  thumbnailUrl: string;
 };

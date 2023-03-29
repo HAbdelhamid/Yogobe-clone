@@ -13,6 +13,9 @@ const Filter = (props: Props) => {
       replace(`/?q=${e.target.value}`, `/?q=${e.target.value}`, {
         shallow: true,
       });
+      // if (query.q === "") {
+      //   e.target.value = "";
+      // }
     },
     500
   );

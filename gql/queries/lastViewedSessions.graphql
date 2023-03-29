@@ -1,0 +1,5 @@
+query lastViewedSeassions {
+  lastWatchedSessions {
+    ...videosDataField
+  }
+}

@@ -3,9 +3,23 @@ import styled from "styled-components";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-export const VideoJS = (props) => {
-  const videoRef = React.useRef(null);
-  const playerRef = React.useRef(null);
+type Props = {
+  onReady: (player: any) => void;
+  options: {
+    controls: boolean;
+    responsive: boolean;
+    fluid: boolean;
+    sources: {
+      src: string;
+      type: string;
+    }[];
+    autoplay: boolean;
+  };
+};
+
+export const VideoJS = (props: Props) => {
+  const videoRef: any = React.useRef(null);
+  const playerRef: any = React.useRef(null);
   const { options, onReady } = props;
 
   React.useEffect(() => {
@@ -25,16 +39,16 @@ export const VideoJS = (props) => {
       // You could update an existing player in the `else` block here
       // on prop change, for example:
     } else {
-      const player = playerRef.current;
+      const player: any = playerRef.current;
 
       player.autoplay(options.autoplay);
       player.src(options.sources);
     }
-  }, [options, videoRef]);
+  }, [options, videoRef, onReady]);
 
   // Dispose the Video.js player when the functional component unmounts
   React.useEffect(() => {
-    const player = playerRef.current;
+    const player: any = playerRef.current;
 
     return () => {
       if (player && !player.isDisposed()) {

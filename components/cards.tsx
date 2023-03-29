@@ -1,38 +1,26 @@
-import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import styled from "styled-components";
-import client from "../gql/apolloclient";
-import { USER } from "../gql/queries/currentUser";
-import { GET_FAVORITE_VIDEOS } from "../gql/queries/getFavoritedVideo";
-import GET_VIDEOS from "../gql/queries/getVideos";
-import { Video } from "../gql/types";
+import {
+  LastViewedSeassionsQuery,
+  VideosDataFieldFragment,
+} from "../gql/generated";
+
 import Card from "./card";
 
 type Props = {
-  loadMore: () => Promise<any>;
-  data: {
-    videos: {
-      totalCount: number;
-      data: Video[];
-    };
-  };
+  loadMore?: () => Promise<any>;
+  data?: VideosDataFieldFragment[];
+  // GetvideosQuery["videos"]["data"]
+  showLoadMoreBtn?: boolean | undefined;
 };
 
-const Cards = ({ loadMore, data }: Props) => {
-  // console.log(data);
+const Cards = ({ loadMore, data, showLoadMoreBtn }: Props) => {
   const [loading, setLoading] = useState(false);
-  const user = useQuery(USER);
-  // const { data } = useQuery(GET_VIDEOS, {
+  // const favoritedVideos = useGetFavoritedQuery({
   //   variables: {
-  //     perPage: 9,
-  //     query: "",
+  //     id: user?.data?.currentUser?.id,
   //   },
   // });
-  const favoritedVideos = useQuery(GET_FAVORITE_VIDEOS, {
-    variables: {
-      id: user?.data?.currentUser?.id,
-    },
-  });
 
   const handleLoadMore = () => {
     setLoading(true);
@@ -44,33 +32,27 @@ const Cards = ({ loadMore, data }: Props) => {
   // if (error) return `Error! ${error.message}`;
   return (
     <>
-      <ResultsCount>{data?.videos.totalCount} results</ResultsCount>
       <Container>
-        {data?.videos.data.map((video, index) => (
-          <Card key={index} video={video} favoritedVideos={favoritedVideos} />
+        {data?.map((video, index) => (
+          <Card key={index} video={video} />
         ))}
       </Container>
 
-      <LoadMoreButton onClick={handleLoadMore}>
-        {loading ? <SpinnerStyles /> : "Load More"}
-      </LoadMoreButton>
+      {showLoadMoreBtn && (
+        <LoadMoreButton onClick={handleLoadMore}>
+          {loading ? <SpinnerStyles /> : "Load More"}
+        </LoadMoreButton>
+      )}
     </>
   );
 };
 
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const { data } = await client.query({
-//     query: GET_VIDEOS,
-//     variables: {
-//       perPage: 9,
-//       query: "",
-//     },
-//   });
+// Cards.defaultProps = {
+//   loadMore: "",
+//   data: "",
+//   showLoadMoreBtn: "",
+// };
 
-//   // Pass data to the page via props
-//   return { props: { data } };
-// }
 export default Cards;
 
 const SpinnerStyles = styled.div`
@@ -89,16 +71,6 @@ const SpinnerStyles = styled.div`
       transform: rotate(360deg);
     }
   }
-`;
-
-const ResultsCount = styled.div`
-  display: flex;
-  justify-content: start;
-  width: 100%;
-  margin-top: 3em;
-  margin-bottom: 1em;
-  font-size: 13px;
-  font-weight: 600;
 `;
 
 const LoadMoreButton = styled.button`

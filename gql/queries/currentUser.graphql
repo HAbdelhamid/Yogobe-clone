@@ -1,0 +1,15 @@
+query currentUser {
+  currentUser {
+    accessToken
+    accessUntil
+    id
+    email
+    firstName
+    assets {
+      avatar
+    }
+    favorites {
+      videos
+    }
+  }
+}
