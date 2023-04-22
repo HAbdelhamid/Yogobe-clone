@@ -35,7 +35,6 @@ const VideoPage = (props: Props) => {
     },
   });
 
-  console.log("related", relatedVideo);
   const playerRef = React.useRef(null);
 
   const { data } = props;

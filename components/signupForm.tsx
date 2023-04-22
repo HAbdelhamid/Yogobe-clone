@@ -45,7 +45,7 @@ const SignupForm = () => {
           platform: DevicePlatformKind.Web,
         },
       });
-      console.log("clicked");
+      
       if (result?.data?.signUpV2?.user?.id) {
         window.location.href = "http://localhost:3000";
       }

@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useLoginMutation } from "../gql/generated";
+import { useAuthenticationMutation, useLoginMutation } from "../gql/generated";
 type FromFields = {
   email: { value: string };
   password: { value: string };
 };
 const LoginForm = () => {
-  const [login, { loading, error }] = useLoginMutation();
-
+  const [login, { loading, error, data }] = useLoginMutation();
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     e.persist();
@@ -23,7 +22,7 @@ const LoginForm = () => {
       const target = e.target as typeof e.target & FromFields;
       target.email.value = "";
       target.password.value = "";
-      console.log(res);
+
       window.location.href = "http://localhost:3000";
     } catch (err) {
       console.log(err);

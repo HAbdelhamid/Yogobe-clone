@@ -1,0 +1,33 @@
+mutation changeProfilData(
+  $displayName: String
+  $shortBio: String
+  $instagramUrl: String
+  $facebookUrl: String
+  $linkedinUrl: String
+  $timezone: String
+  $avatar: Upload
+) {
+  changeProfileData(
+    displayName: $displayName
+    shortBio: $shortBio
+    instagramUrl: $instagramUrl
+    facebookUrl: $facebookUrl
+    linkedinUrl: $linkedinUrl
+    timezone: $timezone
+    avatar: $avatar
+  ) {
+    user {
+      assets {
+        avatar
+      }
+      profile {
+        displayName
+        shortBio
+        facebookURL
+        instagramURL
+        linkedinURL
+        timezone
+      }
+    }
+  }
+}

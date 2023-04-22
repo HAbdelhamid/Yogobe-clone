@@ -92,7 +92,6 @@ const FavoriteBtn = ({ video }: Props) => {
   );
   const handleFavorite = () => {
     if (!currentUserData?.currentUser) {
-      console.log("opened", showLoginModal);
       setShowLoginModal(true);
     } else {
       if (favorites?.includes(video.id)) {

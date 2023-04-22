@@ -2,13 +2,17 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import LoginForm from "../components/loginForm";
+import Link from "next/link";
 
 const Login = () => {
   return (
     <Container>
       <InfoBox>
         <Infobox>
-          <Image src={"/logo.png"} width={120} height={120} alt="" />
+          <Link href={"/"}>
+            <Image src={"/logo.png"} width={120} height={120} alt="" />
+          </Link>
+
           <h2>We are very happy to have you as a member!</h2>
           <p>
             Login and let us inspire, motivate and gudie you to more sustainable

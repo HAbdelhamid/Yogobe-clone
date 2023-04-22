@@ -1,0 +1,9 @@
+mutation deleteAvatar {
+  deleteAvatar {
+    user {
+      assets {
+        avatar
+      }
+    }
+  }
+}

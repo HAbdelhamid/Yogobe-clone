@@ -24,9 +24,11 @@ const Cards = ({ loadMore, data, showLoadMoreBtn }: Props) => {
 
   const handleLoadMore = () => {
     setLoading(true);
-    loadMore().then(() => {
-      setLoading(false);
-    });
+    if (loadMore) {
+      loadMore().then(() => {
+        setLoading(false);
+      });
+    }
   };
   // if (loading) return null;
   // if (error) return `Error! ${error.message}`;

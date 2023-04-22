@@ -15,7 +15,7 @@ const LogoutButton = () => {
   return (
     <LogoutBtn onClick={handleLogout}>
       Logout
-      <LogOut size={30} />
+      {/* <LogOut size={30} /> */}
     </LogoutBtn>
   );
 };
@@ -23,16 +23,10 @@ const LogoutButton = () => {
 export default LogoutButton;
 
 const LogoutBtn = styled.button`
-  font-size: 13px;
-  padding: 8px 10px;
-  margin-left: 6px;
+  font-size: 14px;
   color: black;
   background: transparent;
-  text-decoration: none;
   cursor: pointer;
   border-radius: 3px;
   border: none;
-  display: flex;
-
-  align-items: center;
 `;

@@ -1,19 +1,28 @@
-import { ApolloClient, from, HttpLink, InMemoryCache } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import {
+  ApolloClient,
+  ApolloLink,
+  concat,
+  from,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 
-const setAuthorizationLink = setContext(() => ({
-  headers: {
-    "Accept-Language": "en",
-  },
-}));
+// const httpLink = new HttpLink({
+//   uri: "http://localhost:3000/api/graphql",
+// });
 
-const Link = new HttpLink({
-  uri: "http://localhost:3000/api/graphql",
-});
+// const uploadLink = createUploadLink({
+//   uri: "http://localhost:3000/graphql",
+// });
+
+// const link = concat(httpLink, createUploadLink());
 
 const client = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
-  link: from([setAuthorizationLink, Link]),
+  link: createUploadLink({
+    uri: "http://localhost:3000/api/graphql",
+  }),
+
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -31,6 +40,9 @@ const client = new ApolloClient({
             merge: true,
           },
           video: {
+            merge: true,
+          },
+          currentUser: {
             merge: true,
           },
         },

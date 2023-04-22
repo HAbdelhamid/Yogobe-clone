@@ -10,6 +10,7 @@ import client from "../gql/apolloclient";
 import {
   GetvideosDocument,
   GetvideosQuery,
+  useCurrentUserQuery,
   useGetvideosQuery,
 } from "../gql/generated";
 
@@ -21,6 +22,7 @@ const HomePage = (props: Props) => {
   const [showLoadMore, setShowLoadMore] = useState<boolean>();
   const [totalCountChanged, setTotalCountChanged] = useState<boolean>();
   const { query } = useRouter();
+  const user = useCurrentUserQuery();
 
   const { data, error, fetchMore, refetch, loading } = useGetvideosQuery({
     variables: {
@@ -32,8 +34,6 @@ const HomePage = (props: Props) => {
   const Videos = data?.videos?.data || props.data?.videos?.data;
   const totalCount = data?.videos?.totalCount || props.data?.videos?.totalCount;
   const nextPage = data?.videos?.page || props.data?.videos?.page;
-
-  console.log(data);
 
   useEffect(() => {
     if (totalCount > Videos.length) {
@@ -77,7 +77,6 @@ const HomePage = (props: Props) => {
         </ResultsCount>
         <Cards
           loadMore={() => {
-            console.log("fetchMore");
             return fetchMore({
               variables: {
                 page: nextPage + 1,

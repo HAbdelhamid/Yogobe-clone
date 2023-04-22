@@ -55,4 +55,5 @@ const SearchInput = styled.input`
   color: rgb(36, 36, 36);
   font-size: 14px;
   transition: border 200ms ease-in 0s;
+  outline: ;
 `;

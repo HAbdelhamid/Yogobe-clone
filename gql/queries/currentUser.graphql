@@ -8,6 +8,14 @@ query currentUser {
     assets {
       avatar
     }
+    profile {
+      displayName
+      shortBio
+      facebookURL
+      instagramURL
+      linkedinURL
+      timezone
+    }
     favorites {
       videos
     }
