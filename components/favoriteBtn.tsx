@@ -92,7 +92,8 @@ const FavoriteBtn = ({ video }: Props) => {
   );
   const handleFavorite = () => {
     if (!currentUserData?.currentUser) {
-      setShowLoginModal(true);
+      setShowLoginModal(true)
+      
     } else {
       if (favorites?.includes(video.id)) {
         deleteFavoritedVideo({
@@ -112,6 +113,7 @@ const FavoriteBtn = ({ video }: Props) => {
 
   const handleModalClose = () => {
     setShowLoginModal(false);
+    
   };
   return (
     <div>

@@ -10,6 +10,7 @@ const Modal = ({ children, open, close }: React.PropsWithChildren<Props>) => {
 
   useEffect(() => {
     setShow(open);
+    // document.body.style.overflow = 'hidden';
   }, [open]);
 
   const handleClose = () => {
@@ -43,6 +44,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  overflow: hidden;
 `;
 
 const CancelCircleIcon = styled(CancelCircle)`
@@ -64,4 +66,5 @@ const ModalBackground = styled.div`
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  
 `;

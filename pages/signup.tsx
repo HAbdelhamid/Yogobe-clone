@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import SignupForm from "../components/signupForm";
 import LoginModal from "../components/loginModal";
+import Link from "next/link";
 
 const SignUp = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -17,7 +18,9 @@ const SignUp = () => {
       <LoginModal open={showLoginModal} close={handleModalClose} />
       <InfoBox>
         <Infobox>
-          <Image src={"/logo.png"} width={120} height={120} alt="" />
+          <Link href={"/"}>
+            <Image src={"/logo.png"} width={120} height={120} alt="" />
+          </Link>
           <h2>Explore yoga, meditation, movement and breathing!</h2>
           <p>
             Create an account to watch, save and favorite thousands of videos

@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
     .required("This field is required"),
   password: Yup.string()
     .required("This field is required")
-    .min(8, "Please make sure that you new password has at least 8 characters")
+    .min(8, "Please make sure that your password has at least 8 characters")
     .max(50, "Too Long!"),
   // country: Yup.object().shape({
   //   country: Yup.string().required("Country is required"),
@@ -45,7 +45,7 @@ const SignupForm = () => {
           platform: DevicePlatformKind.Web,
         },
       });
-      
+
       if (result?.data?.signUpV2?.user?.id) {
         window.location.href = "http://localhost:3000";
       }
