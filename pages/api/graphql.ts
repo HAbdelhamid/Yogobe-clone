@@ -1,4 +1,5 @@
 import httpProxy from 'http-proxy';
+import { NextApiRequest, NextApiResponse } from 'next';
 import url from 'url';
 
 const DEFAULT_API_URL = 'https://devenv.yogobe.com';
@@ -18,14 +19,15 @@ export const config = {
   },
 };
 
-export default (req, res) => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (req: NextApiRequest, res: NextApiResponse) => {
   // Return a Promise to let Next.js know when we're done
   // processing the request:
   return new Promise((resolve, reject) => {
     //
     req.url = '/graphql';
     //
-    req.headers.host = host;
+    req.headers.host = host || '';
     // to white-list request & prevent rakattack from blocking it...
     req.headers['ORIGIN-CLIENT'] = 'Vercel';
 
