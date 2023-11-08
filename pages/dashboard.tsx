@@ -13,19 +13,15 @@ import CardLoadingSkeleton from "../components/cardLoadingSkeleton";
 import ProfileMenuList from "../components/profileMenuList";
 import { withAuth } from "../gql/auth";
 
-
-
 function Dashboard() {
   // const [activeTab, setActiveTab] = useState<string>("dashboard");
   const { data } = useLastViewedSeassionsQuery();
-    
-
 
   return (
     <div>
       <Navbar />
       <Container>
-        {/* <Profile /> */}
+        <Profile />
         <ProfileMenuList />
         {!data?.lastWatchedSessions && (
           <LastWatchedVideos>
@@ -39,8 +35,6 @@ function Dashboard() {
             <Cards data={data.lastWatchedSessions} />
           </LastWatchedVideos>
         )}
-        
-        
       </Container>
     </div>
   );
