@@ -15,6 +15,7 @@ import { withAuth } from "../gql/auth";
 function MyFavorites() {
   const router = useRouter();
   const user = useCurrentUserQuery();
+ 
   const getFavoriteVideos = useGetFavoriteVideosQuery({
     variables: {
       id: user.data?.currentUser?.id as string,

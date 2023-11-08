@@ -61,7 +61,7 @@ function Navbar({ userDataUpdate }: Props) {
             <p></p>
             <div></div>
           </UserLoadingSkeleton>
-        ) : (
+          ) : (
           <Box>
             {data?.currentUser ? (
               <>
@@ -113,12 +113,12 @@ function Navbar({ userDataUpdate }: Props) {
               </>
             ) : (
               <>
-                <Link href={"/login"}>
-                  <Normalbtn>Log in</Normalbtn>
-                </Link>
-                <Link href={"/signup"}>
-                  <Bluebtn>Try for free</Bluebtn>
-                </Link>
+                <Normalbtn href={"/login"}>
+                  Log in
+                </Normalbtn>
+                <Bluebtn href={"/signup"}>
+                  Try for free
+                </Bluebtn>
               </>
             )}
           </Box>
@@ -281,7 +281,7 @@ const Box = styled.div`
   }
 `;
 
-const Bluebtn = styled.button`
+const Bluebtn = styled(Link)`
   font-size: 13px;
   padding: 8px 10px;
 
@@ -294,7 +294,7 @@ const Bluebtn = styled.button`
   border: none;
 `;
 
-const Normalbtn = styled.button`
+const Normalbtn = styled(Link)`
   font-size: 13px;
   padding: 8px 10px;
   margin: 6px;

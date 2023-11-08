@@ -1,5 +1,12 @@
 {
   "terminal.integrated.gpuAcceleration": "auto",
   "terminal.integrated.customGlyphs": true,
-  "terminal.integrated.fontFamily": "MesloLGS NF"
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "json.schemas": [
+
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

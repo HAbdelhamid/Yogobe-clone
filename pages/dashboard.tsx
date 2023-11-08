@@ -12,19 +12,20 @@ import cookie from "cookie";
 import CardLoadingSkeleton from "../components/cardLoadingSkeleton";
 import ProfileMenuList from "../components/profileMenuList";
 import { withAuth } from "../gql/auth";
-import { GetServerSideProps } from "next";
-import client from "../gql/apolloclient";
+
+
 
 function Dashboard() {
   // const [activeTab, setActiveTab] = useState<string>("dashboard");
   const { data } = useLastViewedSeassionsQuery();
-  const user = useCurrentUserQuery();
+    
+
 
   return (
     <div>
       <Navbar />
       <Container>
-        <Profile />
+        {/* <Profile /> */}
         <ProfileMenuList />
         {!data?.lastWatchedSessions && (
           <LastWatchedVideos>
@@ -38,15 +39,8 @@ function Dashboard() {
             <Cards data={data.lastWatchedSessions} />
           </LastWatchedVideos>
         )}
-        {}
-        {/* <LastWatchedVideos>
-            <h3>My latest viewed sessions</h3>
-            <CardLoadingSkeleton />
-          </LastWatchedVideos> */}
-        {/* <MyFavourites>
-            <h3>My favorites</h3>
-            <CardLoadingSkeleton />
-          </MyFavourites> */}
+        
+        
       </Container>
     </div>
   );

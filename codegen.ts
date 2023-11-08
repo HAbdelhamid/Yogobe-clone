@@ -8,12 +8,13 @@ const config: CodegenConfig = {
     "./gql/generated/index.ts": {
       plugins: [
         "typescript",
+       
         "typescript-operations",
         "typescript-react-apollo",
       ],
-      config: {
-        withComponent: false,
-      },
+      // config: {
+      //   withComponent: false,
+      // },
     },
     "./gql/generated/apollo-helpers.ts": {
       plugins: ["typescript-apollo-client-helpers"],

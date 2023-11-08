@@ -72,9 +72,10 @@ export type ActivateTrialExtensionPayloadFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AddAdyenPaymentMethodPayloadKeySpecifier = ('errors' | 'orderId' | 'resultAction' | 'resultCode' | 'transaction' | AddAdyenPaymentMethodPayloadKeySpecifier)[];
+export type AddAdyenPaymentMethodPayloadKeySpecifier = ('errors' | 'newRecord' | 'orderId' | 'resultAction' | 'resultCode' | 'transaction' | AddAdyenPaymentMethodPayloadKeySpecifier)[];
 export type AddAdyenPaymentMethodPayloadFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	newRecord?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderId?: FieldPolicy<any> | FieldReadFunction<any>,
 	resultAction?: FieldPolicy<any> | FieldReadFunction<any>,
 	resultCode?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -464,7 +465,7 @@ export type CtaSectionFieldPolicy = {
 	imageUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CurrentUserKeySpecifier = ('accessToken' | 'accessUntil' | 'accountActivatedAt' | 'address' | 'assets' | 'availableForTrial' | 'canUseTrustly' | 'challengeParticipations' | 'city' | 'completedAt' | 'country' | 'courseAccesses' | 'dateOfBirth' | 'eligibleForDelete' | 'eligibleForStartDiscount' | 'eligibleForTrial' | 'email' | 'emailLanguage' | 'extraPayments' | 'favorites' | 'firstName' | 'gender' | 'group' | 'hasWebPayments' | 'id' | 'inGracePeriod' | 'interests' | 'isEmailActivated' | 'isPublic' | 'kind' | 'lastName' | 'liveEventsAccess' | 'locale' | 'meditationSettings' | 'nextBillingCycle' | 'onboardingCompleted' | 'onboardingInterestsSkipped' | 'onboardingSkipped' | 'onboardingTopicsSkipped' | 'paymentFailedAt' | 'paymentType' | 'paymentTypeRenews' | 'phone' | 'playlists' | 'preferences' | 'previousEmail' | 'privacySettings' | 'profession' | 'profile' | 'programAccess' | 'programs' | 'provider' | 'receipts' | 'referralCode' | 'registrationDetail' | 'signUpPlatform' | 'slug' | 'statistics' | 'stories' | 'subscription' | 'topics' | 'trial' | 'trialPeriod' | 'trialPlanSelected' | 'trialRequired' | 'url' | 'videoNotes' | 'zipcode' | CurrentUserKeySpecifier)[];
+export type CurrentUserKeySpecifier = ('accessToken' | 'accessUntil' | 'accountActivatedAt' | 'address' | 'assets' | 'availableForTrial' | 'birthday' | 'canUseTrustly' | 'challengeParticipations' | 'city' | 'completedAt' | 'country' | 'courseAccesses' | 'dateOfBirth' | 'eligibleForDelete' | 'eligibleForStartDiscount' | 'eligibleForTrial' | 'email' | 'emailLanguage' | 'extraPayments' | 'favorites' | 'firstName' | 'funnel' | 'gender' | 'group' | 'hasWebPayments' | 'id' | 'inGracePeriod' | 'interests' | 'isEmailActivated' | 'isPublic' | 'kind' | 'lastAccessPaymentProvider' | 'lastName' | 'lastWellnessAccessProvider' | 'liveEventsAccess' | 'locale' | 'meditationSettings' | 'nextBillingCycle' | 'onboardingCompleted' | 'onboardingInterestsSkipped' | 'onboardingSkipped' | 'onboardingTopicsSkipped' | 'paymentFailedAt' | 'paymentType' | 'paymentTypeRenews' | 'phone' | 'playlists' | 'preferences' | 'previousEmail' | 'privacySettings' | 'profession' | 'profile' | 'programAccess' | 'programs' | 'provider' | 'receipts' | 'referralCode' | 'registrationDetail' | 'registrationSource' | 'signUpPlatform' | 'slug' | 'statistics' | 'stories' | 'subscription' | 'topics' | 'trial' | 'trialPeriod' | 'trialPlanSelected' | 'trialRequired' | 'url' | 'videoNotes' | 'zipcode' | CurrentUserKeySpecifier)[];
 export type CurrentUserFieldPolicy = {
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	accessUntil?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -472,6 +473,7 @@ export type CurrentUserFieldPolicy = {
 	address?: FieldPolicy<any> | FieldReadFunction<any>,
 	assets?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableForTrial?: FieldPolicy<any> | FieldReadFunction<any>,
+	birthday?: FieldPolicy<any> | FieldReadFunction<any>,
 	canUseTrustly?: FieldPolicy<any> | FieldReadFunction<any>,
 	challengeParticipations?: FieldPolicy<any> | FieldReadFunction<any>,
 	city?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -487,6 +489,7 @@ export type CurrentUserFieldPolicy = {
 	extraPayments?: FieldPolicy<any> | FieldReadFunction<any>,
 	favorites?: FieldPolicy<any> | FieldReadFunction<any>,
 	firstName?: FieldPolicy<any> | FieldReadFunction<any>,
+	funnel?: FieldPolicy<any> | FieldReadFunction<any>,
 	gender?: FieldPolicy<any> | FieldReadFunction<any>,
 	group?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasWebPayments?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -496,7 +499,9 @@ export type CurrentUserFieldPolicy = {
 	isEmailActivated?: FieldPolicy<any> | FieldReadFunction<any>,
 	isPublic?: FieldPolicy<any> | FieldReadFunction<any>,
 	kind?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastAccessPaymentProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	lastName?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastWellnessAccessProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	liveEventsAccess?: FieldPolicy<any> | FieldReadFunction<any>,
 	locale?: FieldPolicy<any> | FieldReadFunction<any>,
 	meditationSettings?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -521,6 +526,7 @@ export type CurrentUserFieldPolicy = {
 	receipts?: FieldPolicy<any> | FieldReadFunction<any>,
 	referralCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	registrationDetail?: FieldPolicy<any> | FieldReadFunction<any>,
+	registrationSource?: FieldPolicy<any> | FieldReadFunction<any>,
 	signUpPlatform?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	statistics?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -611,13 +617,14 @@ export type EventProxyPayloadKeySpecifier = ('errors' | EventProxyPayloadKeySpec
 export type EventProxyPayloadFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ExtraPaymentKeySpecifier = ('amount' | 'currency' | 'date' | 'downloadUrl' | 'number' | 'paymentType' | 'transact' | ExtraPaymentKeySpecifier)[];
+export type ExtraPaymentKeySpecifier = ('amount' | 'currency' | 'date' | 'downloadUrl' | 'number' | 'paymentProvider' | 'paymentType' | 'transact' | ExtraPaymentKeySpecifier)[];
 export type ExtraPaymentFieldPolicy = {
 	amount?: FieldPolicy<any> | FieldReadFunction<any>,
 	currency?: FieldPolicy<any> | FieldReadFunction<any>,
 	date?: FieldPolicy<any> | FieldReadFunction<any>,
 	downloadUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	number?: FieldPolicy<any> | FieldReadFunction<any>,
+	paymentProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentType?: FieldPolicy<any> | FieldReadFunction<any>,
 	transact?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -901,7 +908,7 @@ export type MoodTrackerFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	kind?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('accessTokensActivate' | 'accessTokensValidate' | 'activateAccessCode' | 'activateBundle' | 'activateChallenge' | 'activateFullAccessCode' | 'activateGenericProgram' | 'activateLegacyPausaSmart' | 'activateLiveEvent' | 'activateOneTimeCode' | 'activatePausaSmart' | 'activateTrialExtension' | 'addAdyenPaymentMethod' | 'addComment' | 'addFavoritePlaylist' | 'addFavoriteVideo' | 'addMoodTrackerAnswer' | 'addPlaylist' | 'addSearchResult' | 'addStory' | 'addTrustlyPaymentMethod' | 'addUserFeedback' | 'addUserSchedule' | 'addVideoToPlaylist' | 'addWaitingItem' | 'answerSurvey' | 'assignMobileDevice' | 'assignPlanToTrial' | 'authenticateUser' | 'cancelSubscription' | 'changeEmailPreference' | 'changePassword' | 'changePreferences' | 'changeProductEmailPreference' | 'changeProfileData' | 'changeProfileInfo' | 'changeProfilePrivacy' | 'churnStart' | 'churnStep' | 'clickhouseEventProxy' | 'completeProfile' | 'confirmEmail' | 'createNewPassword' | 'deleteAccount' | 'deleteAvatar' | 'deleteFavoritePlaylist' | 'deleteFavoriteVideo' | 'deletePaymentMethod' | 'deletePlaylist' | 'eventProxy' | 'login' | 'logout' | 'participateInAnEvent' | 'patchPlaylist' | 'patchStory' | 'patchUser' | 'payForItem' | 'payForVoucher' | 'paymentsStoreAdyenDropin' | 'paymentsStorePaymentDetails' | 'paymentsStoreTrustly' | 'processTrialPlan' | 'removeVideoFromPlaylist' | 'resendConfirmationEmail' | 'resetEmailConfirmation' | 'resetPassword' | 'resetSummerCampaign' | 'restoreMobileSubscription' | 'saveOnboardingChoices' | 'savePhasedProgramProgress' | 'saveProgramProgress' | 'signUp' | 'signUpV2' | 'socialSignIn' | 'socialSignUp' | 'startTrialPlanSubscription' | 'storeTransactionId' | 'storeUserDecision' | 'submitInterestForm' | 'updateMeditationSettings' | 'updatePaymentMethodSettings' | 'validateChallengeToken' | 'validateProgramCode' | 'videoFavorite' | 'videoWatch' | 'videoWatchCompleted' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('accessTokensActivate' | 'accessTokensValidate' | 'activateAccessCode' | 'activateBundle' | 'activateChallenge' | 'activateFullAccessCode' | 'activateGenericProgram' | 'activateLegacyPausaSmart' | 'activateLiveEvent' | 'activateOneTimeCode' | 'activatePausaSmart' | 'activateTrialExtension' | 'addAdyenPaymentMethod' | 'addComment' | 'addFavoritePlaylist' | 'addFavoriteVideo' | 'addMoodTrackerAnswer' | 'addPlaylist' | 'addSearchResult' | 'addStory' | 'addTrustlyPaymentMethod' | 'addUserFeedback' | 'addUserSchedule' | 'addVideoToPlaylist' | 'addWaitingItem' | 'answerSurvey' | 'assignMobileDevice' | 'assignPlanToTrial' | 'authenticateUser' | 'cancelSubscription' | 'changeEmailPreference' | 'changePassword' | 'changePreferences' | 'changeProductEmailPreference' | 'changeProfileData' | 'changeProfileInfo' | 'changeProfilePrivacy' | 'churnStart' | 'churnStep' | 'clickhouseEventProxy' | 'completeProfile' | 'confirmEmail' | 'createNewPassword' | 'deleteAccount' | 'deleteAvatar' | 'deleteFavoritePlaylist' | 'deleteFavoriteVideo' | 'deletePaymentMethod' | 'deletePlaylist' | 'eventProxy' | 'login' | 'logout' | 'participateInAnEvent' | 'patchPlaylist' | 'patchStory' | 'patchUser' | 'payForItem' | 'payForVoucher' | 'payForWellnessItem' | 'paymentsStoreAdyenDropin' | 'paymentsStorePaymentDetails' | 'paymentsStoreTrustly' | 'processTrialPlan' | 'removeVideoFromPlaylist' | 'resendConfirmationEmail' | 'resetEmailConfirmation' | 'resetPassword' | 'resetSummerCampaign' | 'restoreMobileSubscription' | 'saveOnboardingChoices' | 'savePhasedProgramProgress' | 'saveProgramProgress' | 'signUp' | 'signUpV2' | 'socialSignIn' | 'socialSignUp' | 'startTrialPlanSubscription' | 'storeEpassi' | 'storeTransactionId' | 'storeUserDecision' | 'submitInterestForm' | 'updateMeditationSettings' | 'updatePaymentMethodSettings' | 'validateChallengeToken' | 'validateProgramCode' | 'videoFavorite' | 'videoWatch' | 'videoWatchCompleted' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	accessTokensActivate?: FieldPolicy<any> | FieldReadFunction<any>,
 	accessTokensValidate?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -961,6 +968,7 @@ export type MutationFieldPolicy = {
 	patchUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	payForItem?: FieldPolicy<any> | FieldReadFunction<any>,
 	payForVoucher?: FieldPolicy<any> | FieldReadFunction<any>,
+	payForWellnessItem?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentsStoreAdyenDropin?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentsStorePaymentDetails?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentsStoreTrustly?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -979,6 +987,7 @@ export type MutationFieldPolicy = {
 	socialSignIn?: FieldPolicy<any> | FieldReadFunction<any>,
 	socialSignUp?: FieldPolicy<any> | FieldReadFunction<any>,
 	startTrialPlanSubscription?: FieldPolicy<any> | FieldReadFunction<any>,
+	storeEpassi?: FieldPolicy<any> | FieldReadFunction<any>,
 	storeTransactionId?: FieldPolicy<any> | FieldReadFunction<any>,
 	storeUserDecision?: FieldPolicy<any> | FieldReadFunction<any>,
 	submitInterestForm?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -998,10 +1007,11 @@ export type NeedFieldPolicy = {
 	settings?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type NextBillingCycleKeySpecifier = ('amount' | 'billingDate' | 'paymentStatus' | 'planName' | NextBillingCycleKeySpecifier)[];
+export type NextBillingCycleKeySpecifier = ('amount' | 'billingDate' | 'currentAmountCharged' | 'paymentStatus' | 'planName' | NextBillingCycleKeySpecifier)[];
 export type NextBillingCycleFieldPolicy = {
 	amount?: FieldPolicy<any> | FieldReadFunction<any>,
 	billingDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	currentAmountCharged?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentStatus?: FieldPolicy<any> | FieldReadFunction<any>,
 	planName?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -1176,6 +1186,13 @@ export type PagedVideosFieldPolicy = {
 	perPage?: FieldPolicy<any> | FieldReadFunction<any>,
 	totalCount?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PagedWellnessPackageKeySpecifier = ('data' | 'page' | 'perPage' | 'totalCount' | PagedWellnessPackageKeySpecifier)[];
+export type PagedWellnessPackageFieldPolicy = {
+	data?: FieldPolicy<any> | FieldReadFunction<any>,
+	page?: FieldPolicy<any> | FieldReadFunction<any>,
+	perPage?: FieldPolicy<any> | FieldReadFunction<any>,
+	totalCount?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ParticipateInAnEventPayloadKeySpecifier = ('amountCents' | 'amountCurrency' | 'errors' | 'liveEvent' | 'message' | 'success' | 'user' | ParticipateInAnEventPayloadKeySpecifier)[];
 export type ParticipateInAnEventPayloadFieldPolicy = {
 	amountCents?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1209,6 +1226,19 @@ export type PayForVoucherPayloadFieldPolicy = {
 	resultAction?: FieldPolicy<any> | FieldReadFunction<any>,
 	resultCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PayForWellnessItemPayloadKeySpecifier = ('amount' | 'cancelUrl' | 'fee' | 'mac' | 'notifyUrl' | 'rejectUrl' | 'returnUrl' | 'site' | 'stamp' | 'vatValue' | PayForWellnessItemPayloadKeySpecifier)[];
+export type PayForWellnessItemPayloadFieldPolicy = {
+	amount?: FieldPolicy<any> | FieldReadFunction<any>,
+	cancelUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	fee?: FieldPolicy<any> | FieldReadFunction<any>,
+	mac?: FieldPolicy<any> | FieldReadFunction<any>,
+	notifyUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	rejectUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	returnUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	site?: FieldPolicy<any> | FieldReadFunction<any>,
+	stamp?: FieldPolicy<any> | FieldReadFunction<any>,
+	vatValue?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PaymentKeySpecifier = ('amount' | 'currency' | 'date' | 'downloadUrl' | 'mobilePayment' | 'months' | 'number' | 'paymentProvider' | 'paymentType' | 'transact' | PaymentKeySpecifier)[];
 export type PaymentFieldPolicy = {
@@ -1300,6 +1330,17 @@ export type PriceFieldPolicy = {
 	discountApplied?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountedPrice?: FieldPolicy<any> | FieldReadFunction<any>,
 	originalPrice?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PriceBreakdownKeySpecifier = ('amountPerDay' | 'currency' | 'extraDays' | 'extraDaysAmount' | 'originalPlanAmount' | 'planCount' | 'planType' | 'totalAmount' | PriceBreakdownKeySpecifier)[];
+export type PriceBreakdownFieldPolicy = {
+	amountPerDay?: FieldPolicy<any> | FieldReadFunction<any>,
+	currency?: FieldPolicy<any> | FieldReadFunction<any>,
+	extraDays?: FieldPolicy<any> | FieldReadFunction<any>,
+	extraDaysAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	originalPlanAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	planCount?: FieldPolicy<any> | FieldReadFunction<any>,
+	planType?: FieldPolicy<any> | FieldReadFunction<any>,
+	totalAmount?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PrivacySettingsKeySpecifier = ('isPrivateFavorites' | 'isPrivateHistory' | 'isPrivatePlaylists' | 'isPrivateProfile' | 'isPrivateStats' | PrivacySettingsKeySpecifier)[];
 export type PrivacySettingsFieldPolicy = {
@@ -1509,6 +1550,11 @@ export type ProgramsDetailsFieldPolicy = {
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
 	video?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PromotionKeySpecifier = ('name' | 'promotionItems' | PromotionKeySpecifier)[];
+export type PromotionFieldPolicy = {
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	promotionItems?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PromotionCodeKeySpecifier = ('code' | 'creationDate' | 'expirationDate' | 'matchingResources' | 'provider' | 'usageLimit' | 'usedIn' | PromotionCodeKeySpecifier)[];
 export type PromotionCodeFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1524,7 +1570,7 @@ export type PromotionCodeUserFieldPolicy = {
 	live?: FieldPolicy<any> | FieldReadFunction<any>,
 	usageDate?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('activateCampaignCode' | 'autocomplete' | 'availableAllCodes' | 'availableOneTimeCode' | 'availableSubscriptionPlans' | 'availableTrial' | 'availableTrialExtensions' | 'batchVideos' | 'bundle' | 'bundles' | 'campaignCode' | 'churnUpsellOffers' | 'currentUser' | 'document' | 'emailCheck' | 'emailPreferences' | 'favoritePlaylists' | 'favoriteVideos' | 'flipperFlags' | 'genericProgram' | 'genericPrograms' | 'getFavoritePlaylists' | 'getFavoriteVideos' | 'getUser' | 'giftGenericProgram' | 'instructor' | 'instructorByGenre' | 'instructors' | 'lastWatchedSessions' | 'liveEvent' | 'liveEventCodes' | 'liveEvents' | 'meditationOverview' | 'meditationStats' | 'myBundles' | 'myGenericPrograms' | 'myPaymentMethods' | 'onboardingChoices' | 'order' | 'overviewPlaylists' | 'pageByRoute' | 'pages' | 'pay' | 'phasedProgram' | 'playOverview' | 'playlist' | 'playlists' | 'posts' | 'precheckMobileSubscription' | 'predictedLtv' | 'program' | 'programActiveState' | 'programById' | 'programBySlug' | 'programSurveyCompletion' | 'programThemes' | 'receipts' | 'recentVideos' | 'recommendations' | 'recommendedOnboardingPlaylists' | 'recommendedOnboardingVideos' | 'recommendedPlaylists' | 'relatedPagesByRoute' | 'relatedVideos' | 'search' | 'searchSuggestions' | 'specificSearch' | 'startOverview' | 'subPagesByRoute' | 'survey' | 'surveyPart' | 'surveys' | 'taxonomies' | 'testimonials' | 'trialSubscriptionOffer' | 'trials' | 'upsellOffers' | 'userOptions' | 'userPlaylists' | 'userStats' | 'users' | 'validateBundleCode' | 'validateLiveEventCode' | 'validateSubscriptionTransfer' | 'video' | 'videos' | 'videosByFeature' | 'waitingListBundles' | 'weeklyProgram' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('activateCampaignCode' | 'autocomplete' | 'availableAllCodes' | 'availableOneTimeCode' | 'availableSubscriptionPlans' | 'availableTrial' | 'availableTrialExtensions' | 'batchVideos' | 'bundle' | 'bundles' | 'calculateCustomDays' | 'campaignCode' | 'churnUpsellOffers' | 'currentUser' | 'document' | 'emailCheck' | 'emailPreferences' | 'favoritePlaylists' | 'favoriteVideos' | 'fetchCrossPromotions' | 'flipperFlags' | 'genericProgram' | 'genericPrograms' | 'getFavoritePlaylists' | 'getFavoriteVideos' | 'getUser' | 'giftGenericProgram' | 'instructor' | 'instructorByGenre' | 'instructors' | 'lastWatchedSessions' | 'liveEvent' | 'liveEventCodes' | 'liveEvents' | 'meditationOverview' | 'meditationStats' | 'myBundles' | 'myGenericPrograms' | 'myPaymentMethods' | 'onboardingChoices' | 'order' | 'overviewPlaylists' | 'pageByRoute' | 'pages' | 'pay' | 'phasedProgram' | 'playOverview' | 'playlist' | 'playlists' | 'posts' | 'precheckMobileSubscription' | 'predictedLtv' | 'program' | 'programActiveState' | 'programById' | 'programBySlug' | 'programSurveyCompletion' | 'programThemes' | 'receipts' | 'recentVideos' | 'recommendations' | 'recommendedOnboardingPlaylists' | 'recommendedOnboardingVideos' | 'recommendedPlaylists' | 'relatedPagesByRoute' | 'relatedVideos' | 'search' | 'searchSuggestions' | 'specificSearch' | 'startOverview' | 'subPagesByRoute' | 'survey' | 'surveyPart' | 'surveys' | 'taxonomies' | 'testimonials' | 'trialSubscriptionOffer' | 'trials' | 'upsellOffers' | 'userOptions' | 'userPlaylists' | 'userStats' | 'users' | 'validateBundleCode' | 'validateLiveEventCode' | 'validateSubscriptionTransfer' | 'video' | 'videos' | 'videosByFeature' | 'waitingListBundles' | 'weeklyProgram' | 'wellness' | 'wellnesses' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	activateCampaignCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	autocomplete?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1536,6 +1582,7 @@ export type QueryFieldPolicy = {
 	batchVideos?: FieldPolicy<any> | FieldReadFunction<any>,
 	bundle?: FieldPolicy<any> | FieldReadFunction<any>,
 	bundles?: FieldPolicy<any> | FieldReadFunction<any>,
+	calculateCustomDays?: FieldPolicy<any> | FieldReadFunction<any>,
 	campaignCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	churnUpsellOffers?: FieldPolicy<any> | FieldReadFunction<any>,
 	currentUser?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1544,6 +1591,7 @@ export type QueryFieldPolicy = {
 	emailPreferences?: FieldPolicy<any> | FieldReadFunction<any>,
 	favoritePlaylists?: FieldPolicy<any> | FieldReadFunction<any>,
 	favoriteVideos?: FieldPolicy<any> | FieldReadFunction<any>,
+	fetchCrossPromotions?: FieldPolicy<any> | FieldReadFunction<any>,
 	flipperFlags?: FieldPolicy<any> | FieldReadFunction<any>,
 	genericProgram?: FieldPolicy<any> | FieldReadFunction<any>,
 	genericPrograms?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1614,7 +1662,9 @@ export type QueryFieldPolicy = {
 	videos?: FieldPolicy<any> | FieldReadFunction<any>,
 	videosByFeature?: FieldPolicy<any> | FieldReadFunction<any>,
 	waitingListBundles?: FieldPolicy<any> | FieldReadFunction<any>,
-	weeklyProgram?: FieldPolicy<any> | FieldReadFunction<any>
+	weeklyProgram?: FieldPolicy<any> | FieldReadFunction<any>,
+	wellness?: FieldPolicy<any> | FieldReadFunction<any>,
+	wellnesses?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RecommendationsKeySpecifier = ('courses' | 'playlists' | 'videos' | RecommendationsKeySpecifier)[];
 export type RecommendationsFieldPolicy = {
@@ -1679,9 +1729,10 @@ export type SaveProgramProgressPayloadKeySpecifier = ('errors' | SaveProgramProg
 export type SaveProgramProgressPayloadFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SearchKeySpecifier = ('blogPosts' | 'challenges' | 'courses' | 'events' | 'genericPrograms' | 'instructors' | 'landingPages' | 'liveEvents' | 'playlists' | 'query' | 'suggestions' | 'videos' | SearchKeySpecifier)[];
+export type SearchKeySpecifier = ('blogPosts' | 'bundles' | 'challenges' | 'courses' | 'events' | 'genericPrograms' | 'instructors' | 'landingPages' | 'liveEvents' | 'playlists' | 'query' | 'suggestions' | 'videos' | SearchKeySpecifier)[];
 export type SearchFieldPolicy = {
 	blogPosts?: FieldPolicy<any> | FieldReadFunction<any>,
+	bundles?: FieldPolicy<any> | FieldReadFunction<any>,
 	challenges?: FieldPolicy<any> | FieldReadFunction<any>,
 	courses?: FieldPolicy<any> | FieldReadFunction<any>,
 	events?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1700,6 +1751,37 @@ export type SearchBlogPostFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type SearchBundleKeySpecifier = ('accessUntil' | 'bundleCategory' | 'cardImageUrl' | 'client' | 'heroImageUrl' | 'hideInDashboard' | 'hideInfoText' | 'id' | 'joinAutomatically' | 'kind' | 'metaDescription' | 'primaryInstructor' | 'processedAt' | 'publishedAt' | 'shortDescription' | 'slug' | 'startTime' | 'tags' | 'themes' | 'title' | 'viewAllBlogPostsUrl' | 'viewAllChallengesUrl' | 'viewAllPlaylistsUrl' | 'viewAllProgramsUrl' | 'viewAllVideosUrl' | 'waitingListEnabled' | 'waitingListEndDate' | 'waitingListStartDate' | SearchBundleKeySpecifier)[];
+export type SearchBundleFieldPolicy = {
+	accessUntil?: FieldPolicy<any> | FieldReadFunction<any>,
+	bundleCategory?: FieldPolicy<any> | FieldReadFunction<any>,
+	cardImageUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	client?: FieldPolicy<any> | FieldReadFunction<any>,
+	heroImageUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	hideInDashboard?: FieldPolicy<any> | FieldReadFunction<any>,
+	hideInfoText?: FieldPolicy<any> | FieldReadFunction<any>,
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	joinAutomatically?: FieldPolicy<any> | FieldReadFunction<any>,
+	kind?: FieldPolicy<any> | FieldReadFunction<any>,
+	metaDescription?: FieldPolicy<any> | FieldReadFunction<any>,
+	primaryInstructor?: FieldPolicy<any> | FieldReadFunction<any>,
+	processedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	publishedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	shortDescription?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	startTime?: FieldPolicy<any> | FieldReadFunction<any>,
+	tags?: FieldPolicy<any> | FieldReadFunction<any>,
+	themes?: FieldPolicy<any> | FieldReadFunction<any>,
+	title?: FieldPolicy<any> | FieldReadFunction<any>,
+	viewAllBlogPostsUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	viewAllChallengesUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	viewAllPlaylistsUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	viewAllProgramsUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	viewAllVideosUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	waitingListEnabled?: FieldPolicy<any> | FieldReadFunction<any>,
+	waitingListEndDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	waitingListStartDate?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type SearchEventKeySpecifier = ('description' | 'endsAt' | 'id' | 'instructor' | 'location' | 'name' | 'slug' | 'startsAt' | 'titleImageUrl' | SearchEventKeySpecifier)[];
 export type SearchEventFieldPolicy = {
@@ -1821,9 +1903,10 @@ export type SpecialSectionFieldPolicy = {
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	videos?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SpecificSearchKeySpecifier = ('blogPosts' | 'challenges' | 'courses' | 'events' | 'genericPrograms' | 'instructors' | 'landingPages' | 'liveEvents' | 'playlists' | 'query' | 'suggestions' | 'videos' | SpecificSearchKeySpecifier)[];
+export type SpecificSearchKeySpecifier = ('blogPosts' | 'bundles' | 'challenges' | 'courses' | 'events' | 'genericPrograms' | 'instructors' | 'landingPages' | 'liveEvents' | 'playlists' | 'query' | 'suggestions' | 'videos' | SpecificSearchKeySpecifier)[];
 export type SpecificSearchFieldPolicy = {
 	blogPosts?: FieldPolicy<any> | FieldReadFunction<any>,
+	bundles?: FieldPolicy<any> | FieldReadFunction<any>,
 	challenges?: FieldPolicy<any> | FieldReadFunction<any>,
 	courses?: FieldPolicy<any> | FieldReadFunction<any>,
 	events?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1886,6 +1969,19 @@ export type StoreAdyenDropinPayloadFieldPolicy = {
 	resultAction?: FieldPolicy<any> | FieldReadFunction<any>,
 	resultCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type StoreEpassiPayloadKeySpecifier = ('amount' | 'cancelUrl' | 'fee' | 'mac' | 'notifyUrl' | 'rejectUrl' | 'returnUrl' | 'site' | 'stamp' | 'vatValue' | StoreEpassiPayloadKeySpecifier)[];
+export type StoreEpassiPayloadFieldPolicy = {
+	amount?: FieldPolicy<any> | FieldReadFunction<any>,
+	cancelUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	fee?: FieldPolicy<any> | FieldReadFunction<any>,
+	mac?: FieldPolicy<any> | FieldReadFunction<any>,
+	notifyUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	rejectUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	returnUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	site?: FieldPolicy<any> | FieldReadFunction<any>,
+	stamp?: FieldPolicy<any> | FieldReadFunction<any>,
+	vatValue?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StorePaymentDetailsPayloadKeySpecifier = ('action' | 'errors' | 'orderId' | 'resultAction' | 'resultCode' | 'transaction' | StorePaymentDetailsPayloadKeySpecifier)[];
 export type StorePaymentDetailsPayloadFieldPolicy = {
@@ -2070,15 +2166,22 @@ export type TopicFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TrialKeySpecifier = ('claimedAt' | 'code' | 'endDate' | 'id' | 'periodDays' | 'subscriptionPlanType' | 'subscriptionPromotionId' | TrialKeySpecifier)[];
+export type TrialKeySpecifier = ('claimedAt' | 'code' | 'endDate' | 'id' | 'periodDays' | 'selectedSubscriptionPlan' | 'subscriptionPlanType' | 'subscriptionPromotionId' | TrialKeySpecifier)[];
 export type TrialFieldPolicy = {
 	claimedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	endDate?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	periodDays?: FieldPolicy<any> | FieldReadFunction<any>,
+	selectedSubscriptionPlan?: FieldPolicy<any> | FieldReadFunction<any>,
 	subscriptionPlanType?: FieldPolicy<any> | FieldReadFunction<any>,
 	subscriptionPromotionId?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TrialsSelectedSubscriptionPlanKeySpecifier = ('amountCents' | 'amountCurrency' | 'name' | TrialsSelectedSubscriptionPlanKeySpecifier)[];
+export type TrialsSelectedSubscriptionPlanFieldPolicy = {
+	amountCents?: FieldPolicy<any> | FieldReadFunction<any>,
+	amountCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TwentyThreeKeySpecifier = ('iframeUrl' | TwentyThreeKeySpecifier)[];
 export type TwentyThreeFieldPolicy = {
@@ -2104,7 +2207,7 @@ export type UpsellFieldPolicy = {
 	subscriptionPlanType?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserKeySpecifier = ('accessToken' | 'accessUntil' | 'accountActivatedAt' | 'address' | 'assets' | 'availableForTrial' | 'canUseTrustly' | 'challengeParticipations' | 'city' | 'completedAt' | 'country' | 'courseAccesses' | 'dateOfBirth' | 'eligibleForDelete' | 'eligibleForStartDiscount' | 'eligibleForTrial' | 'email' | 'emailLanguage' | 'extraPayments' | 'favorites' | 'firstName' | 'gender' | 'group' | 'hasWebPayments' | 'id' | 'inGracePeriod' | 'interests' | 'isEmailActivated' | 'isPublic' | 'kind' | 'lastName' | 'liveEventsAccess' | 'locale' | 'meditationSettings' | 'nextBillingCycle' | 'onboardingCompleted' | 'onboardingInterestsSkipped' | 'onboardingSkipped' | 'onboardingTopicsSkipped' | 'paymentFailedAt' | 'paymentType' | 'paymentTypeRenews' | 'phone' | 'playlists' | 'preferences' | 'previousEmail' | 'privacySettings' | 'profession' | 'profile' | 'programAccess' | 'programs' | 'provider' | 'receipts' | 'referralCode' | 'registrationDetail' | 'signUpPlatform' | 'slug' | 'statistics' | 'stories' | 'subscription' | 'topics' | 'trial' | 'trialPeriod' | 'trialPlanSelected' | 'trialRequired' | 'url' | 'videoNotes' | 'zipcode' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('accessToken' | 'accessUntil' | 'accountActivatedAt' | 'address' | 'assets' | 'availableForTrial' | 'birthday' | 'canUseTrustly' | 'challengeParticipations' | 'city' | 'completedAt' | 'country' | 'courseAccesses' | 'dateOfBirth' | 'eligibleForDelete' | 'eligibleForStartDiscount' | 'eligibleForTrial' | 'email' | 'emailLanguage' | 'extraPayments' | 'favorites' | 'firstName' | 'funnel' | 'gender' | 'group' | 'hasWebPayments' | 'id' | 'inGracePeriod' | 'interests' | 'isEmailActivated' | 'isPublic' | 'kind' | 'lastAccessPaymentProvider' | 'lastName' | 'lastWellnessAccessProvider' | 'liveEventsAccess' | 'locale' | 'meditationSettings' | 'nextBillingCycle' | 'onboardingCompleted' | 'onboardingInterestsSkipped' | 'onboardingSkipped' | 'onboardingTopicsSkipped' | 'paymentFailedAt' | 'paymentType' | 'paymentTypeRenews' | 'phone' | 'playlists' | 'preferences' | 'previousEmail' | 'privacySettings' | 'profession' | 'profile' | 'programAccess' | 'programs' | 'provider' | 'receipts' | 'referralCode' | 'registrationDetail' | 'registrationSource' | 'signUpPlatform' | 'slug' | 'statistics' | 'stories' | 'subscription' | 'topics' | 'trial' | 'trialPeriod' | 'trialPlanSelected' | 'trialRequired' | 'url' | 'videoNotes' | 'zipcode' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	accessUntil?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2112,6 +2215,7 @@ export type UserFieldPolicy = {
 	address?: FieldPolicy<any> | FieldReadFunction<any>,
 	assets?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableForTrial?: FieldPolicy<any> | FieldReadFunction<any>,
+	birthday?: FieldPolicy<any> | FieldReadFunction<any>,
 	canUseTrustly?: FieldPolicy<any> | FieldReadFunction<any>,
 	challengeParticipations?: FieldPolicy<any> | FieldReadFunction<any>,
 	city?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2127,6 +2231,7 @@ export type UserFieldPolicy = {
 	extraPayments?: FieldPolicy<any> | FieldReadFunction<any>,
 	favorites?: FieldPolicy<any> | FieldReadFunction<any>,
 	firstName?: FieldPolicy<any> | FieldReadFunction<any>,
+	funnel?: FieldPolicy<any> | FieldReadFunction<any>,
 	gender?: FieldPolicy<any> | FieldReadFunction<any>,
 	group?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasWebPayments?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2136,7 +2241,9 @@ export type UserFieldPolicy = {
 	isEmailActivated?: FieldPolicy<any> | FieldReadFunction<any>,
 	isPublic?: FieldPolicy<any> | FieldReadFunction<any>,
 	kind?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastAccessPaymentProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	lastName?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastWellnessAccessProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	liveEventsAccess?: FieldPolicy<any> | FieldReadFunction<any>,
 	locale?: FieldPolicy<any> | FieldReadFunction<any>,
 	meditationSettings?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2161,6 +2268,7 @@ export type UserFieldPolicy = {
 	receipts?: FieldPolicy<any> | FieldReadFunction<any>,
 	referralCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	registrationDetail?: FieldPolicy<any> | FieldReadFunction<any>,
+	registrationSource?: FieldPolicy<any> | FieldReadFunction<any>,
 	signUpPlatform?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	statistics?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2183,7 +2291,7 @@ export type UserAccessFieldPolicy = {
 	joinedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserInterfaceKeySpecifier = ('accessToken' | 'accessUntil' | 'accountActivatedAt' | 'address' | 'assets' | 'availableForTrial' | 'canUseTrustly' | 'challengeParticipations' | 'city' | 'completedAt' | 'country' | 'courseAccesses' | 'dateOfBirth' | 'eligibleForDelete' | 'eligibleForStartDiscount' | 'eligibleForTrial' | 'email' | 'emailLanguage' | 'extraPayments' | 'favorites' | 'firstName' | 'gender' | 'group' | 'hasWebPayments' | 'id' | 'inGracePeriod' | 'interests' | 'isEmailActivated' | 'isPublic' | 'kind' | 'lastName' | 'liveEventsAccess' | 'locale' | 'meditationSettings' | 'nextBillingCycle' | 'onboardingCompleted' | 'onboardingInterestsSkipped' | 'onboardingSkipped' | 'onboardingTopicsSkipped' | 'paymentFailedAt' | 'paymentType' | 'paymentTypeRenews' | 'phone' | 'playlists' | 'preferences' | 'previousEmail' | 'privacySettings' | 'profession' | 'profile' | 'programAccess' | 'programs' | 'provider' | 'receipts' | 'referralCode' | 'registrationDetail' | 'signUpPlatform' | 'slug' | 'statistics' | 'stories' | 'subscription' | 'topics' | 'trial' | 'trialPeriod' | 'trialPlanSelected' | 'trialRequired' | 'url' | 'videoNotes' | 'zipcode' | UserInterfaceKeySpecifier)[];
+export type UserInterfaceKeySpecifier = ('accessToken' | 'accessUntil' | 'accountActivatedAt' | 'address' | 'assets' | 'availableForTrial' | 'birthday' | 'canUseTrustly' | 'challengeParticipations' | 'city' | 'completedAt' | 'country' | 'courseAccesses' | 'dateOfBirth' | 'eligibleForDelete' | 'eligibleForStartDiscount' | 'eligibleForTrial' | 'email' | 'emailLanguage' | 'extraPayments' | 'favorites' | 'firstName' | 'funnel' | 'gender' | 'group' | 'hasWebPayments' | 'id' | 'inGracePeriod' | 'interests' | 'isEmailActivated' | 'isPublic' | 'kind' | 'lastAccessPaymentProvider' | 'lastName' | 'lastWellnessAccessProvider' | 'liveEventsAccess' | 'locale' | 'meditationSettings' | 'nextBillingCycle' | 'onboardingCompleted' | 'onboardingInterestsSkipped' | 'onboardingSkipped' | 'onboardingTopicsSkipped' | 'paymentFailedAt' | 'paymentType' | 'paymentTypeRenews' | 'phone' | 'playlists' | 'preferences' | 'previousEmail' | 'privacySettings' | 'profession' | 'profile' | 'programAccess' | 'programs' | 'provider' | 'receipts' | 'referralCode' | 'registrationDetail' | 'registrationSource' | 'signUpPlatform' | 'slug' | 'statistics' | 'stories' | 'subscription' | 'topics' | 'trial' | 'trialPeriod' | 'trialPlanSelected' | 'trialRequired' | 'url' | 'videoNotes' | 'zipcode' | UserInterfaceKeySpecifier)[];
 export type UserInterfaceFieldPolicy = {
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	accessUntil?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2191,6 +2299,7 @@ export type UserInterfaceFieldPolicy = {
 	address?: FieldPolicy<any> | FieldReadFunction<any>,
 	assets?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableForTrial?: FieldPolicy<any> | FieldReadFunction<any>,
+	birthday?: FieldPolicy<any> | FieldReadFunction<any>,
 	canUseTrustly?: FieldPolicy<any> | FieldReadFunction<any>,
 	challengeParticipations?: FieldPolicy<any> | FieldReadFunction<any>,
 	city?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2206,6 +2315,7 @@ export type UserInterfaceFieldPolicy = {
 	extraPayments?: FieldPolicy<any> | FieldReadFunction<any>,
 	favorites?: FieldPolicy<any> | FieldReadFunction<any>,
 	firstName?: FieldPolicy<any> | FieldReadFunction<any>,
+	funnel?: FieldPolicy<any> | FieldReadFunction<any>,
 	gender?: FieldPolicy<any> | FieldReadFunction<any>,
 	group?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasWebPayments?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2215,7 +2325,9 @@ export type UserInterfaceFieldPolicy = {
 	isEmailActivated?: FieldPolicy<any> | FieldReadFunction<any>,
 	isPublic?: FieldPolicy<any> | FieldReadFunction<any>,
 	kind?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastAccessPaymentProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	lastName?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastWellnessAccessProvider?: FieldPolicy<any> | FieldReadFunction<any>,
 	liveEventsAccess?: FieldPolicy<any> | FieldReadFunction<any>,
 	locale?: FieldPolicy<any> | FieldReadFunction<any>,
 	meditationSettings?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2240,6 +2352,7 @@ export type UserInterfaceFieldPolicy = {
 	receipts?: FieldPolicy<any> | FieldReadFunction<any>,
 	referralCode?: FieldPolicy<any> | FieldReadFunction<any>,
 	registrationDetail?: FieldPolicy<any> | FieldReadFunction<any>,
+	registrationSource?: FieldPolicy<any> | FieldReadFunction<any>,
 	signUpPlatform?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	statistics?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2438,9 +2551,10 @@ export type VideosLibrarySectionFieldPolicy = {
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
 	videosLibrary?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type WaitingItemInfoKeySpecifier = ('startDate' | 'waitingListEnabled' | 'waitingListEndDate' | 'waitingListJoined' | 'waitingListStartDate' | WaitingItemInfoKeySpecifier)[];
+export type WaitingItemInfoKeySpecifier = ('startDate' | 'startTime' | 'waitingListEnabled' | 'waitingListEndDate' | 'waitingListJoined' | 'waitingListStartDate' | WaitingItemInfoKeySpecifier)[];
 export type WaitingItemInfoFieldPolicy = {
 	startDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	startTime?: FieldPolicy<any> | FieldReadFunction<any>,
 	waitingListEnabled?: FieldPolicy<any> | FieldReadFunction<any>,
 	waitingListEndDate?: FieldPolicy<any> | FieldReadFunction<any>,
 	waitingListJoined?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2466,6 +2580,50 @@ export type WeeklyProgramFieldPolicy = {
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	tags?: FieldPolicy<any> | FieldReadFunction<any>,
 	weeks?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type WellnessKeySpecifier = ('courses' | 'customPackage' | 'id' | 'instructions' | 'liveEventPackages' | 'liveEvents' | 'logo' | 'name' | 'platformUrl' | 'slug' | 'status' | 'subscriptionPlans' | 'wellnessAccesses' | WellnessKeySpecifier)[];
+export type WellnessFieldPolicy = {
+	courses?: FieldPolicy<any> | FieldReadFunction<any>,
+	customPackage?: FieldPolicy<any> | FieldReadFunction<any>,
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	instructions?: FieldPolicy<any> | FieldReadFunction<any>,
+	liveEventPackages?: FieldPolicy<any> | FieldReadFunction<any>,
+	liveEvents?: FieldPolicy<any> | FieldReadFunction<any>,
+	logo?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	platformUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	status?: FieldPolicy<any> | FieldReadFunction<any>,
+	subscriptionPlans?: FieldPolicy<any> | FieldReadFunction<any>,
+	wellnessAccesses?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type WellnessAccessKeySpecifier = ('periodUnit' | 'periodValue' | WellnessAccessKeySpecifier)[];
+export type WellnessAccessFieldPolicy = {
+	periodUnit?: FieldPolicy<any> | FieldReadFunction<any>,
+	periodValue?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type WellnessPackageKeySpecifier = ('amountCents' | 'amountCurrency' | 'description' | 'id' | 'instructions' | 'name' | 'packageable' | 'priceBreakdown' | 'thumbnail' | WellnessPackageKeySpecifier)[];
+export type WellnessPackageFieldPolicy = {
+	amountCents?: FieldPolicy<any> | FieldReadFunction<any>,
+	amountCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	instructions?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	packageable?: FieldPolicy<any> | FieldReadFunction<any>,
+	priceBreakdown?: FieldPolicy<any> | FieldReadFunction<any>,
+	thumbnail?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type WellnessPackagePaymentKeySpecifier = ('amountCents' | 'amountCurrency' | 'orderId' | 'originalAmountCents' | 'paymentProvider' | 'state' | 'success' | 'wellnessPackage' | WellnessPackagePaymentKeySpecifier)[];
+export type WellnessPackagePaymentFieldPolicy = {
+	amountCents?: FieldPolicy<any> | FieldReadFunction<any>,
+	amountCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	orderId?: FieldPolicy<any> | FieldReadFunction<any>,
+	originalAmountCents?: FieldPolicy<any> | FieldReadFunction<any>,
+	paymentProvider?: FieldPolicy<any> | FieldReadFunction<any>,
+	state?: FieldPolicy<any> | FieldReadFunction<any>,
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	wellnessPackage?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StrictTypedTypePolicies = {
 	AccessPeriod?: Omit<TypePolicy, "fields" | "keyFields"> & {
@@ -3028,6 +3186,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | PagedVideosKeySpecifier | (() => undefined | PagedVideosKeySpecifier),
 		fields?: PagedVideosFieldPolicy,
 	},
+	PagedWellnessPackage?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PagedWellnessPackageKeySpecifier | (() => undefined | PagedWellnessPackageKeySpecifier),
+		fields?: PagedWellnessPackageFieldPolicy,
+	},
 	ParticipateInAnEventPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ParticipateInAnEventPayloadKeySpecifier | (() => undefined | ParticipateInAnEventPayloadKeySpecifier),
 		fields?: ParticipateInAnEventPayloadFieldPolicy,
@@ -3047,6 +3209,10 @@ export type StrictTypedTypePolicies = {
 	PayForVoucherPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PayForVoucherPayloadKeySpecifier | (() => undefined | PayForVoucherPayloadKeySpecifier),
 		fields?: PayForVoucherPayloadFieldPolicy,
+	},
+	PayForWellnessItemPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PayForWellnessItemPayloadKeySpecifier | (() => undefined | PayForWellnessItemPayloadKeySpecifier),
+		fields?: PayForWellnessItemPayloadFieldPolicy,
 	},
 	Payment?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentKeySpecifier | (() => undefined | PaymentKeySpecifier),
@@ -3087,6 +3253,10 @@ export type StrictTypedTypePolicies = {
 	Price?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PriceKeySpecifier | (() => undefined | PriceKeySpecifier),
 		fields?: PriceFieldPolicy,
+	},
+	PriceBreakdown?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PriceBreakdownKeySpecifier | (() => undefined | PriceBreakdownKeySpecifier),
+		fields?: PriceBreakdownFieldPolicy,
 	},
 	PrivacySettings?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PrivacySettingsKeySpecifier | (() => undefined | PrivacySettingsKeySpecifier),
@@ -3160,6 +3330,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | ProgramsDetailsKeySpecifier | (() => undefined | ProgramsDetailsKeySpecifier),
 		fields?: ProgramsDetailsFieldPolicy,
 	},
+	Promotion?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PromotionKeySpecifier | (() => undefined | PromotionKeySpecifier),
+		fields?: PromotionFieldPolicy,
+	},
 	PromotionCode?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PromotionCodeKeySpecifier | (() => undefined | PromotionCodeKeySpecifier),
 		fields?: PromotionCodeFieldPolicy,
@@ -3232,6 +3406,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | SearchBlogPostKeySpecifier | (() => undefined | SearchBlogPostKeySpecifier),
 		fields?: SearchBlogPostFieldPolicy,
 	},
+	SearchBundle?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | SearchBundleKeySpecifier | (() => undefined | SearchBundleKeySpecifier),
+		fields?: SearchBundleFieldPolicy,
+	},
 	SearchEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | SearchEventKeySpecifier | (() => undefined | SearchEventKeySpecifier),
 		fields?: SearchEventFieldPolicy,
@@ -3299,6 +3477,10 @@ export type StrictTypedTypePolicies = {
 	StoreAdyenDropinPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StoreAdyenDropinPayloadKeySpecifier | (() => undefined | StoreAdyenDropinPayloadKeySpecifier),
 		fields?: StoreAdyenDropinPayloadFieldPolicy,
+	},
+	StoreEpassiPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | StoreEpassiPayloadKeySpecifier | (() => undefined | StoreEpassiPayloadKeySpecifier),
+		fields?: StoreEpassiPayloadFieldPolicy,
 	},
 	StorePaymentDetailsPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StorePaymentDetailsPayloadKeySpecifier | (() => undefined | StorePaymentDetailsPayloadKeySpecifier),
@@ -3383,6 +3565,10 @@ export type StrictTypedTypePolicies = {
 	Trial?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TrialKeySpecifier | (() => undefined | TrialKeySpecifier),
 		fields?: TrialFieldPolicy,
+	},
+	TrialsSelectedSubscriptionPlan?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | TrialsSelectedSubscriptionPlanKeySpecifier | (() => undefined | TrialsSelectedSubscriptionPlanKeySpecifier),
+		fields?: TrialsSelectedSubscriptionPlanFieldPolicy,
 	},
 	TwentyThree?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TwentyThreeKeySpecifier | (() => undefined | TwentyThreeKeySpecifier),
@@ -3491,6 +3677,22 @@ export type StrictTypedTypePolicies = {
 	WeeklyProgram?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | WeeklyProgramKeySpecifier | (() => undefined | WeeklyProgramKeySpecifier),
 		fields?: WeeklyProgramFieldPolicy,
+	},
+	Wellness?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | WellnessKeySpecifier | (() => undefined | WellnessKeySpecifier),
+		fields?: WellnessFieldPolicy,
+	},
+	WellnessAccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | WellnessAccessKeySpecifier | (() => undefined | WellnessAccessKeySpecifier),
+		fields?: WellnessAccessFieldPolicy,
+	},
+	WellnessPackage?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | WellnessPackageKeySpecifier | (() => undefined | WellnessPackageKeySpecifier),
+		fields?: WellnessPackageFieldPolicy,
+	},
+	WellnessPackagePayment?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | WellnessPackagePaymentKeySpecifier | (() => undefined | WellnessPackagePaymentKeySpecifier),
+		fields?: WellnessPackagePaymentFieldPolicy,
 	}
 };
 export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies;

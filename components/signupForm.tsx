@@ -154,7 +154,7 @@ const SignupForm = () => {
             setSubmitted(true);
           }}
         >
-          {loading ? <SpinnerStyles /> : "Log in"}
+          {loading ? <SpinnerStyles /> : "Sign Up"}
         </button>
         {data?.signUpV2?.errors?.[0].message && (
           <ServerError>{data.signUpV2.errors[0].message}</ServerError>
